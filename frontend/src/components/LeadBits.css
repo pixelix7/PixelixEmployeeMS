@@ -1,0 +1,76 @@
+.call-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.call-new {
+  background: rgba(29, 21, 18, 0.07);
+  color: var(--ink-soft);
+}
+
+.call-no_answer,
+.call-busy {
+  background: rgba(241, 201, 165, 0.6);
+  color: var(--clay);
+}
+
+.call-call_back {
+  background: rgba(196, 98, 58, 0.15);
+  color: var(--clay);
+}
+
+.call-interested {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+}
+
+.call-converted {
+  background: rgba(47, 133, 90, 0.12);
+  color: #276749;
+}
+
+.call-not_interested,
+.call-invalid {
+  background: rgba(180, 35, 24, 0.08);
+  color: #b42318;
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.contact-number {
+  margin-right: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact-btn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--clay);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.contact-btn:hover {
+  border-color: var(--terra);
+  background: var(--terra);
+  color: var(--cream);
+}
+
+.contact-btn.is-wa:hover {
+  border-color: #1f9d55;
+  background: #1f9d55;
+}

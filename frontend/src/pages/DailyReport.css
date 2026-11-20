@@ -1,0 +1,98 @@
+.stat-grid.dr-cards {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.dr-activity {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 13px;
+  white-space: normal;
+}
+
+.dr-activity strong {
+  font-size: 15px;
+}
+
+.dr-activity span {
+  color: var(--ink-soft);
+}
+
+.dr-activity span::before {
+  content: "· ";
+  color: var(--ink-faint);
+}
+
+.dr-activity .is-good {
+  color: #276749;
+  font-weight: 600;
+}
+
+.dr-activity .is-bad {
+  color: #b42318;
+  font-weight: 600;
+}
+
+/* Person's day */
+.dr-timeline {
+  max-height: 55vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.dr-timeline li {
+  display: flex;
+  gap: 16px;
+  padding: 12px 20px;
+}
+
+.dr-timeline li + li {
+  border-top: 1px solid rgba(196, 98, 58, 0.1);
+}
+
+.dr-time {
+  flex: none;
+  width: 64px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--clay);
+}
+
+.dr-event {
+  min-width: 0;
+}
+
+.dr-event p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.dr-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px !important;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 1279px) {
+  .stat-grid.dr-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .stat-grid.dr-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 479px) {
+  .stat-grid.dr-cards {
+    grid-template-columns: 1fr;
+  }
+}

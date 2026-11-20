@@ -1,0 +1,71 @@
+.cat-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cat-audit_demo {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+}
+
+.cat-creative_design {
+  background: rgba(147, 51, 234, 0.1);
+  color: #7e22ce;
+}
+
+.cat-campaign_post {
+  background: rgba(196, 98, 58, 0.14);
+  color: var(--clay);
+}
+
+.cat-client_followup {
+  background: rgba(13, 148, 136, 0.12);
+  color: #0f766e;
+}
+
+.cat-assigned_task {
+  background: var(--ink);
+  color: var(--sand);
+}
+
+.work-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.work-pending {
+  background: rgba(29, 21, 18, 0.07);
+  color: var(--ink-soft);
+}
+
+.work-in_progress {
+  background: rgba(241, 201, 165, 0.65);
+  color: var(--clay);
+}
+
+.work-completed,
+.work-closed_won {
+  background: rgba(47, 133, 90, 0.12);
+  color: #276749;
+}
+
+.work-closed_lost {
+  background: rgba(180, 35, 24, 0.08);
+  color: #b42318;
+}
+
+.work-cancelled {
+  background: rgba(29, 21, 18, 0.05);
+  color: var(--ink-faint);
+  text-decoration: line-through;
+}

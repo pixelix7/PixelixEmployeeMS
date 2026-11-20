@@ -1,0 +1,236 @@
+.bulk {
+  display: grid;
+  gap: 20px;
+}
+
+.bulk code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(241, 201, 165, 0.45);
+  font-size: 12px;
+}
+
+/* Steps */
+.bulk-steps {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bulk-steps > li {
+  display: flex;
+  gap: 14px;
+}
+
+.bulk-steps > li > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.bulk-step-num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bulk-step-title {
+  margin: 3px 0 4px;
+  font-weight: 500;
+}
+
+.bulk-step-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink-soft);
+}
+
+.bulk-tip {
+  margin-top: 10px;
+}
+
+/* Drop zone */
+.bulk-drop {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  padding: 28px 16px;
+  border: 1.5px dashed rgba(196, 98, 58, 0.35);
+  border-radius: 12px;
+  background: var(--card);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.bulk-drop:hover,
+.bulk-drop.is-dragging {
+  border-color: var(--terra);
+  background: rgba(241, 201, 165, 0.25);
+}
+
+.bulk-drop strong {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.bulk-drop span {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.bulk-alert {
+  margin-top: 12px;
+}
+
+/* Ready / errors counters */
+.bulk-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bulk-stat {
+  padding: 8px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.bulk-stat strong {
+  margin-right: 4px;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.bulk-stat.is-good strong {
+  color: #276749;
+}
+
+.bulk-stat.is-bad {
+  border-color: rgba(180, 35, 24, 0.3);
+  background: rgba(180, 35, 24, 0.05);
+}
+
+.bulk-stat.is-bad strong {
+  color: #b42318;
+}
+
+/* Preview table */
+.bulk-preview {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.bulk-preview tr.is-bad td {
+  background: rgba(180, 35, 24, 0.035);
+}
+
+.bulk-check {
+  white-space: normal !important;
+  min-width: 220px;
+}
+
+.bulk-check ul,
+.bulk-errors ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 18px;
+  color: #b42318;
+}
+
+.bulk-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #276749;
+}
+
+.bulk-ok em {
+  font-style: normal;
+  color: var(--clay);
+}
+
+/* Results */
+.bulk-creds p {
+  margin: 0 0 10px;
+}
+
+.bulk-errors {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bulk-errors > li {
+  display: flex;
+  gap: 16px;
+  padding: 12px 24px;
+}
+
+.bulk-errors > li + li {
+  border-top: 1px solid rgba(196, 98, 58, 0.1);
+}
+
+.bulk-row {
+  flex: none;
+  width: 56px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bulk-email {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.bulk-wait {
+  margin-top: -8px;
+  text-align: right;
+}
+
+.bulk-name,
+.bulk-email-sm {
+  margin: 0;
+}
+
+.bulk-name {
+  font-weight: 500;
+}
+
+.bulk-email-sm {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.bulk-preview .att-table th,
+.bulk-preview .att-table td {
+  padding: 10px 16px;
+}
+
+/* Phones: keep Row, Employee and Check so problems are visible without scrolling */
+@media (max-width: 639px) {
+  .bulk-hide-sm {
+    display: none;
+  }
+
+  .bulk-check {
+    min-width: 0;
+  }
+}

@@ -1,0 +1,60 @@
+.lead-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lead-toolbar .emp-search {
+  flex: 1;
+}
+
+.lead-toolbar select.input {
+  width: auto;
+  min-width: 170px;
+}
+
+.lead-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.lead-table tbody tr:hover,
+.lead-table tbody tr:focus-visible {
+  outline: none;
+  background: rgba(241, 201, 165, 0.25);
+}
+
+.lead-name {
+  margin: 0;
+  font-weight: 500;
+}
+
+.lead-notes-preview {
+  max-width: 260px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-overflow: ellipsis;
+}
+
+.att-table td.lead-overdue {
+  color: #b42318;
+  font-weight: 500;
+}
+
+.lead-overdue small {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .lead-toolbar {
+    flex-direction: column;
+  }
+
+  .lead-toolbar select.input {
+    width: 100%;
+  }
+}

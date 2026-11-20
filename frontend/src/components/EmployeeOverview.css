@@ -1,0 +1,188 @@
+.eo-error {
+    margin-bottom: 20px;
+}
+
+.stat-grid.stat-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ---------- Today / clock card ---------- */
+.clock-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding: 24px 28px;
+    border-radius: 12px;
+    color: var(--txt);
+    background:
+        radial-gradient(
+            60% 120% at 0% 0%,
+            rgba(196, 98, 58, 0.45),
+            transparent 70%
+        ),
+        radial-gradient(
+            50% 120% at 100% 100%,
+            rgba(143, 63, 33, 0.45),
+            transparent 70%
+        ),
+        var(--ink);
+}
+
+.clock-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.75;
+}
+
+.clock-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6fcf97;
+    box-shadow: 0 0 0 0 rgba(111, 207, 151, 0.6);
+    animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+    70% {
+        box-shadow: 0 0 0 8px rgba(111, 207, 151, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(111, 207, 151, 0);
+    }
+}
+
+.clock-info h2 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+}
+
+.clock-detail {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--sand);
+    opacity: 0.85;
+}
+
+.clock-error {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #ffb4a0;
+}
+
+.clock-btn {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--terra), var(--clay));
+    color: var(--cream);
+    text-align: left;
+    box-shadow: 0 10px 24px -10px rgba(196, 98, 58, 0.8);
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+}
+
+.clock-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px -10px rgba(196, 98, 58, 0.9);
+}
+
+.clock-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.clock-btn.is-out {
+    border: 1px solid var(--line);
+    background: rgba(255, 235, 215, 0.08);
+    box-shadow: none;
+}
+
+.clock-btn.is-out:hover:not(:disabled) {
+    background: rgba(255, 235, 215, 0.14);
+}
+
+.clock-btn span {
+    display: grid;
+}
+
+.clock-btn strong {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.clock-btn small {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+@media (max-width: 1023px) {
+    .stat-grid.stat-grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .stat-grid.stat-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .clock-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+    }
+
+    .clock-btn {
+        justify-content: center;
+    }
+}
+
+/* Office start / late cutoff rule */
+.clock-policy {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin: 14px 0 0;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 235, 215, 0.06);
+    font-size: 12px;
+    color: var(--sand);
+}
+
+.clock-policy svg {
+    flex: none;
+    opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+    .clock-policy {
+        align-items: flex-start;
+        border-radius: 12px;
+    }
+
+    .clock-policy svg {
+        margin-top: 1px;
+    }
+}

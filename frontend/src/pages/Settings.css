@@ -1,0 +1,82 @@
+.settings-profile {
+  max-width: 768px;
+  margin-bottom: 24px;
+}
+
+.settings-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-card-title svg {
+  color: var(--ink-faint);
+}
+
+.settings-notice {
+  margin-bottom: 24px;
+}
+
+.settings-readonly-hint {
+  margin-top: 16px;
+}
+
+.settings-profile .form-actions {
+  margin-top: 8px;
+}
+
+/* Password card */
+.settings-password {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 448px;
+}
+
+.settings-password-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-icon {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(241, 201, 165, 0.45);
+  color: var(--clay);
+}
+
+.settings-password-title {
+  margin: 0;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.settings-password-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* Password modal */
+.settings-pw-form {
+  display: grid;
+  gap: 20px;
+}
+
+.settings-pw-hint {
+  margin-top: -8px;
+}
+
+.settings-pw-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.settings-pw-actions .button {
+  flex: 1;
+}

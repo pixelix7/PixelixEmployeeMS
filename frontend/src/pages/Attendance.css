@@ -1,0 +1,214 @@
+.att-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.att-head .page-head {
+  margin-bottom: 0;
+}
+
+/* Daily / Monthly switch */
+.att-tabs {
+  display: inline-flex;
+  padding: 4px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.att-tabs button {
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.att-tabs button:hover {
+  color: var(--ink);
+}
+
+.att-tabs button.is-active {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* Toolbar */
+.att-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.att-picker {
+  display: flex;
+  gap: 8px;
+}
+
+.att-picker .input {
+  width: auto;
+  min-width: 180px;
+}
+
+.att-search {
+  flex: 1;
+}
+
+.att-alert {
+  margin-bottom: 20px;
+}
+
+/* Tables */
+.panel.is-refreshing {
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+
+.att-meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.att-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.att-table th.num,
+.att-table td.num {
+  text-align: right;
+}
+
+.att-table-clickable tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.att-table-clickable tbody tr:hover,
+.att-table-clickable tbody tr:focus-visible {
+  outline: none;
+  background: rgba(241, 201, 165, 0.25);
+}
+
+.att-table tr.is-off td {
+  color: var(--ink-faint);
+}
+
+.att-muted {
+  color: var(--ink-faint);
+}
+
+.att-footnote {
+  margin-top: 12px;
+}
+
+/* Attendance rate bar */
+.rate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+}
+
+.rate-track {
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+}
+
+.rate-fill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.rate-good {
+  background: #2f855a;
+}
+
+.rate-ok {
+  background: var(--terra);
+}
+
+.rate-low {
+  background: #b42318;
+}
+
+.rate span {
+  min-width: 38px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* Employee month modal */
+.att-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.att-chips span {
+  padding: 6px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.att-chips strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.att-modal-table {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 639px) {
+  .att-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .att-tabs button {
+    flex: 1;
+  }
+
+  .att-toolbar {
+    flex-direction: column;
+  }
+
+  .att-picker .input {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.att-export {
+  white-space: nowrap;
+}
+
+.att-export-error {
+  align-self: center;
+  font-size: 13px;
+  color: #b42318;
+}
+
+@media (max-width: 639px) {
+  .att-picker {
+    flex-wrap: wrap;
+  }
+}

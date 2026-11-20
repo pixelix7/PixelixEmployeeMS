@@ -1,0 +1,123 @@
+.work-form {
+  display: grid;
+  gap: 20px;
+}
+
+.work-form .form-field > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+/* Assigned task summary (read-only for the marketer) */
+.work-locked {
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-locked-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.work-locked-title {
+  margin: 8px 0 0;
+  font-weight: 500;
+}
+
+.work-locked-details {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+}
+
+/* History timeline */
+.work-history {
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-history-title {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.work-history ol {
+  display: grid;
+  gap: 12px;
+  max-height: 220px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.work-history li {
+  display: flex;
+  gap: 10px;
+}
+
+.work-history-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--terra);
+}
+
+.work-history-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.work-history-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+/* Actions */
+.work-actions {
+  flex-wrap: wrap;
+}
+
+.work-delete {
+  margin-right: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #b42318;
+  font-size: 14px;
+}
+
+.work-delete:hover {
+  text-decoration: underline;
+}
+
+.work-delete-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  font-size: 14px;
+  color: #b42318;
+}

@@ -1,0 +1,95 @@
+.lead-form {
+  display: grid;
+  gap: 20px;
+}
+
+.lead-form .form-field > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+.lead-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.lead-check.is-free {
+  color: #276749;
+}
+
+.lead-check.is-taken {
+  color: #b42318;
+}
+
+.lead-lock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Source chips */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.chip:hover {
+  border-color: rgba(196, 98, 58, 0.45);
+  color: var(--ink);
+}
+
+.chip.is-active {
+  border-color: var(--terra);
+  background: var(--terra);
+  color: var(--cream);
+}
+
+/* Follow-up shortcuts */
+.quick-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.quick-times button {
+  padding: 3px 10px;
+  border: 1px dashed var(--card-border);
+  border-radius: 999px;
+  background: none;
+  color: var(--clay);
+  font-size: 12px;
+}
+
+.quick-times button:hover {
+  border-style: solid;
+  border-color: var(--terra);
+}
+
+.lead-notes {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.lead-form .form-actions {
+  flex-wrap: wrap;
+}

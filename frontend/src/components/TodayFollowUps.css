@@ -1,0 +1,139 @@
+.fu-panel {
+  margin-bottom: 32px;
+  border-color: rgba(196, 98, 58, 0.3);
+}
+
+.fu-panel .panel-head h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fu-count {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.fu-overdue-count {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(180, 35, 24, 0.1);
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.fu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fu-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+}
+
+.fu-item + .fu-item {
+  border-top: 1px solid rgba(196, 98, 58, 0.1);
+}
+
+.fu-item.is-overdue {
+  background: rgba(180, 35, 24, 0.035);
+}
+
+.fu-time span {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.fu-time small {
+  font-size: 11px;
+  font-weight: 600;
+  color: #b42318;
+}
+
+.fu-name,
+.fu-meta {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fu-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.fu-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.fu-update {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.fu-panel .panel-link {
+  white-space: nowrap;
+}
+
+/* Tablet / phone: time + status, then name, then call buttons + Update */
+@media (max-width: 1023px) {
+  .fu-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "time status"
+      "main main"
+      "contact action";
+    gap: 8px 12px;
+    padding: 14px 16px;
+  }
+
+  .fu-time {
+    grid-area: time;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    align-items: baseline;
+  }
+
+  .fu-item > .call-pill {
+    grid-area: status;
+    justify-self: end;
+  }
+
+  .fu-main {
+    grid-area: main;
+  }
+
+  .fu-item > .contact {
+    grid-area: contact;
+  }
+
+  .fu-update {
+    grid-area: action;
+  }
+}
+
+@media (max-width: 639px) {
+  .fu-panel .panel-head {
+    padding: 14px 16px;
+  }
+
+  .fu-panel .panel-head h2 {
+    flex-wrap: wrap;
+    font-size: 15px;
+  }
+}
