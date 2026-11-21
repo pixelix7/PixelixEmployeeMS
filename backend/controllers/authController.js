@@ -13,6 +13,10 @@ const REGISTER_FIELDS = [
   "aadhar",
   "role",
   "password",
+  "officeStart",
+  "officeEnd",
+  "graceMinutes",
+  "workDays",
 ];
 
 // Fields a user may change on their own profile.
@@ -59,6 +63,11 @@ export const login = async (req, res) => {
   // can't find out which emails are registered
   if (!user || !(await user.comparePassword(password))) {
     throw new AppError("Invalid email or password", 401);
+  }
+
+  // Checked after the password, so this doesn't reveal which emails exist
+  if (user.isActive === false) {
+    throw new AppError("Your account has been deactivated. Please contact your admin.", 403);
   }
 
   res.json(tokenResponse(user));

@@ -29,6 +29,11 @@ export const protect = async (req, res, next) => {
     throw new AppError("User belonging to this token no longer exists", 401);
   }
 
+  // Deactivation takes effect immediately, even with a valid token
+  if (user.isActive === false) {
+    throw new AppError("Your account has been deactivated", 401);
+  }
+
   if (user.changedPasswordAfter(decoded.iat)) {
     throw new AppError("Password was changed, please log in again", 401);
   }

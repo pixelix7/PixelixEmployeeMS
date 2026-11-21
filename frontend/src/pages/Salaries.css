@@ -1,0 +1,171 @@
+.sal-head-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sal-head-actions .input {
+  width: 190px;
+}
+
+.sal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sal-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.att-tabs button.is-active .sal-count {
+  background: rgba(251, 241, 227, 0.2);
+}
+
+.att-tabs button.has-alert:not(.is-active) .sal-count {
+  background: rgba(217, 119, 6, 0.16);
+  color: #b45309;
+}
+
+.sal-search {
+  width: 260px;
+}
+
+.sal-alert {
+  margin-bottom: 20px;
+}
+
+.sal-name {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.sal-name:hover {
+  color: var(--terra);
+}
+
+.sal-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  white-space: normal;
+}
+
+.sal-att-main {
+  white-space: nowrap;
+}
+
+.sal-net-cell {
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.sal-table tr.is-missing td {
+  background: rgba(217, 119, 6, 0.04);
+}
+
+.att-table td.sal-none {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.sal-actions-col {
+  text-align: right;
+}
+
+.sal-row-actions {
+  display: inline-flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.sal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sal-btn:hover {
+  border-color: rgba(196, 98, 58, 0.45);
+  color: var(--ink);
+}
+
+.sal-btn.is-icon {
+  padding: 6px 8px;
+}
+
+.sal-btn.is-pay {
+  border-color: rgba(21, 128, 61, 0.35);
+  color: #15803d;
+}
+
+.sal-btn.is-pay:hover {
+  background: rgba(21, 128, 61, 0.06);
+}
+
+.sal-btn.is-add {
+  border-color: var(--terra);
+  background: var(--terra);
+  color: var(--cream);
+}
+
+.sal-btn.is-add:hover {
+  background: var(--clay);
+  color: var(--cream);
+}
+
+.sal-table tfoot td {
+  border-top: 2px solid var(--terra);
+  background: var(--cream);
+  font-weight: 600;
+}
+
+.sal-history-table {
+  margin-top: 4px;
+}
+
+@media (max-width: 1023px) {
+  .sal-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 639px) {
+  .sal-head-actions {
+    flex-direction: column;
+  }
+
+  .sal-head-actions .input,
+  .sal-head-actions .button {
+    width: 100%;
+  }
+
+  .sal-toolbar .att-tabs {
+    width: 100%;
+  }
+
+  .sal-toolbar .att-tabs button {
+    padding: 8px 8px;
+  }
+}

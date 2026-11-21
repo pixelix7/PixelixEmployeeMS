@@ -49,11 +49,15 @@ export const CLOSED_STATUSES = ["not_interested", "converted", "invalid"];
 
 // ---------- Digital marketing work log ----------
 export const WORK_CATEGORIES = [
-  { value: "audit_demo", label: "Audit / Demo" },
-  { value: "creative_design", label: "Creative / Design" },
-  { value: "campaign_post", label: "Campaign / Post" },
-  { value: "client_followup", label: "Client / Lead Follow-up" },
-  { value: "assigned_task", label: "Assigned Task" },
+  { value: "seo_optimization", label: "SEO Optimization" },
+  { value: "website_audit", label: "Website Audit" },
+  { value: "social_media", label: "Social Media Management" },
+  { value: "graphic_design", label: "Graphic Designing" },
+  { value: "content_creation", label: "Content Creation" },
+  { value: "campaign_management", label: "Campaign Management" },
+  { value: "client_reporting", label: "Client Reporting" },
+  { value: "ecommerce_listing", label: "E-commerce Listing" },
+  { value: "other_tasks", label: "Other Tasks" },
 ];
 export const WORK_CATEGORY_LABELS = Object.fromEntries(WORK_CATEGORIES.map((c) => [c.value, c.label]));
 
@@ -68,11 +72,96 @@ export const WORK_STATUS_LABELS = {
 
 export const CLOSED_WORK_STATUSES = ["completed", "closed_won", "closed_lost", "cancelled"];
 
-// Same rule as the backend: audits/demos and follow-ups close as won/lost
-const OUTCOME_CATEGORIES = ["audit_demo", "client_followup"];
+// Same rule as the backend: website audits close as won/lost, everything else as completed
+const OUTCOME_CATEGORIES = ["website_audit"];
 export const workStatusesFor = (category) => [
   "pending",
   "in_progress",
   ...(OUTCOME_CATEGORIES.includes(category) ? ["closed_won", "closed_lost"] : ["completed"]),
   "cancelled",
 ];
+
+// Attendance day statuses (match the backend)
+export const DAY_STATUS_LABELS = {
+  present: "On time",
+  late: "Late",
+  half_day: "Half day",
+  absent: "Absent",
+  not_in: "Not in yet",
+  holiday: "Holiday",
+  off: "Off day",
+  leave: "On leave",
+};
+
+// ---------- Leave (match the backend) ----------
+export const LEAVE_TYPES = [
+  { value: "casual", label: "Casual" },
+  { value: "sick", label: "Sick" },
+  { value: "earned", label: "Earned" },
+  { value: "unpaid", label: "Unpaid" },
+  { value: "other", label: "Other" },
+];
+export const LEAVE_TYPE_LABELS = Object.fromEntries(LEAVE_TYPES.map((t) => [t.value, t.label]));
+
+export const LEAVE_STATUS_LABELS = {
+  pending: "Pending",
+  approved: "Approved",
+  rejected: "Rejected",
+  cancelled: "Cancelled",
+};
+
+// ---------- Announcements ----------
+export const ANNOUNCEMENT_AUDIENCES = [
+  { value: "all", label: "Everyone" },
+  { value: "telecaller", label: "Telecallers" },
+  { value: "digital_marketing", label: "Digital Marketing" },
+];
+export const AUDIENCE_LABELS = Object.fromEntries(ANNOUNCEMENT_AUDIENCES.map((a) => [a.value, a.label]));
+
+// ---------- Tasks (admin assigns to employees) ----------
+export const TASK_STATUS_LABELS = {
+  todo: "To do",
+  in_progress: "In progress",
+  done: "Done",
+  cancelled: "Cancelled",
+};
+export const TASK_PRIORITIES = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+];
+export const TASK_PRIORITY_LABELS = Object.fromEntries(TASK_PRIORITIES.map((p) => [p.value, p.label]));
+
+// ---------- Clients ----------
+export const CLIENT_STATUSES = [
+  { value: "active", label: "Active" },
+  { value: "on_hold", label: "On hold" },
+  { value: "inactive", label: "Inactive" },
+];
+export const CLIENT_STATUS_LABELS = Object.fromEntries(CLIENT_STATUSES.map((s) => [s.value, s.label]));
+
+// ---------- Salary ----------
+export const PAYMENT_MODES = [
+  { value: "bank_transfer", label: "Bank transfer" },
+  { value: "upi", label: "UPI" },
+  { value: "cash", label: "Cash" },
+  { value: "cheque", label: "Cheque" },
+];
+export const PAYMENT_MODE_LABELS = Object.fromEntries(PAYMENT_MODES.map((m) => [m.value, m.label]));
+
+// ---------- Work reports (employee end-of-day reports) ----------
+export const REPORT_STATUS_LABELS = {
+  pending: "Pending review",
+  approved: "Approved",
+  rejected: "Needs changes",
+};
+
+// ---------- Projects (client work) ----------
+export const PROJECT_STATUSES = [
+  { value: "planning", label: "Planning" },
+  { value: "in_progress", label: "In progress" },
+  { value: "on_hold", label: "On hold" },
+  { value: "completed", label: "Completed" },
+  { value: "cancelled", label: "Cancelled" },
+];
+export const PROJECT_STATUS_LABELS = Object.fromEntries(PROJECT_STATUSES.map((s) => [s.value, s.label]));

@@ -1,0 +1,173 @@
+.task-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-tabs {
+  flex-wrap: wrap;
+}
+
+.task-tabs .task-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.task-tabs button.is-active .task-count {
+  background: rgba(251, 241, 227, 0.2);
+}
+
+.task-tabs button.has-alert:not(.is-active) .task-count {
+  background: rgba(180, 35, 24, 0.12);
+  color: #b42318;
+}
+
+.task-filters {
+  display: flex;
+  gap: 12px;
+}
+
+.task-employee {
+  width: 220px;
+}
+
+.task-search {
+  width: 240px;
+}
+
+.task-alert {
+  margin-bottom: 20px;
+}
+
+.task-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+.task-row:first-child {
+  border-top: 0;
+}
+
+.task-row.is-overdue {
+  background: rgba(180, 35, 24, 0.035);
+}
+
+.task-row.is-done .task-row-title,
+.task-row.is-cancelled .task-row-title {
+  color: var(--ink-soft);
+}
+
+.task-open {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  padding: 16px 0 16px 24px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.task-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-row-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.task-open:hover .task-row-title {
+  color: var(--terra);
+}
+
+.task-row-side {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-quick {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.task-more {
+  border-top: 1px solid var(--card-border);
+  font-size: 13px;
+}
+
+@media (max-width: 1023px) {
+  .task-filters {
+    width: 100%;
+  }
+
+  .task-employee,
+  .task-search {
+    flex: 1;
+    width: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .task-tabs {
+    width: 100%;
+  }
+
+  .task-tabs button {
+    padding: 8px 10px;
+  }
+
+  .task-filters {
+    flex-direction: column;
+  }
+
+  .task-row {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0 16px 14px;
+  }
+
+  .task-open {
+    flex-basis: 100%;
+    padding: 14px 0 10px;
+  }
+
+  .task-row-side {
+    width: 100%;
+  }
+
+  .task-row-side .task-pill {
+    margin-right: auto;
+  }
+
+  .att-head > .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

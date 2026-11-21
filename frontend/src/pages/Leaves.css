@@ -1,0 +1,238 @@
+/* ---------- Leave page (staff + admin) ---------- */
+.leave-notice {
+  margin-bottom: 20px;
+}
+
+.leave-chips {
+  margin-bottom: 20px;
+}
+
+.att-tabs .leave-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.att-tabs button.is-active .leave-count {
+  background: rgba(251, 241, 227, 0.2);
+}
+
+.leave-filter {
+  max-width: 280px;
+}
+
+.leave-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leave-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+.leave-item:first-child {
+  border-top: 0;
+}
+
+.leave-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.leave-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.leave-who {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.leave-who a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.leave-who a:hover {
+  color: var(--terra);
+}
+
+.leave-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.leave-reason {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.leave-review {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.leave-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.leave-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.leave-actions .button {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.leave-reject:hover:not(:disabled) {
+  border-color: rgba(180, 35, 24, 0.45);
+  color: #b42318;
+}
+
+.leave-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.leave-link:hover {
+  color: #b42318;
+}
+
+/* Type tag */
+.leave-type {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.06);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.leave-type-casual { background: rgba(196, 98, 58, 0.12); color: var(--clay); }
+.leave-type-sick { background: rgba(180, 35, 24, 0.09); color: #b42318; }
+.leave-type-earned { background: rgba(21, 128, 61, 0.1); color: #15803d; }
+.leave-type-unpaid { background: rgba(29, 21, 18, 0.08); color: var(--ink-soft); }
+
+/* Request status */
+.leave-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.leave-pending { background: rgba(217, 119, 6, 0.14); color: #b45309; }
+.leave-approved { background: rgba(21, 128, 61, 0.12); color: #15803d; }
+.leave-rejected { background: rgba(180, 35, 24, 0.09); color: #b42318; }
+.leave-cancelled { background: rgba(29, 21, 18, 0.06); color: var(--ink-faint); }
+
+/* Apply form */
+.leave-half {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.leave-half input {
+  margin-top: 3px;
+  accent-color: var(--terra);
+}
+
+.leave-half span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.leave-half small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.leave-hint {
+  margin: 14px 0 0;
+}
+
+.leave-dialog-reason {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--sand);
+  background: rgba(241, 201, 165, 0.18);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+@media (max-width: 639px) {
+  .leave-item {
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
+  .leave-side {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .leave-actions {
+    width: 100%;
+  }
+
+  .leave-actions .button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .leave-filter {
+    max-width: none;
+  }
+
+  .att-head > .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

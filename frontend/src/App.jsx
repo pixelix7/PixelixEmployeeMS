@@ -7,6 +7,15 @@ import Attendance from "./pages/Attendance";
 import Leads from "./pages/Leads";
 import WorkLog from "./pages/WorkLog";
 import DailyReport from "./pages/DailyReport";
+import EmployeeProfile from "./pages/EmployeeProfile";
+import Leaves from "./pages/Leaves";
+import Announcements from "./pages/Announcements";
+import Tasks from "./pages/Tasks";
+import Reports from "./pages/Reports";
+import Clients from "./pages/Clients";
+import Salaries from "./pages/Salaries";
+import WorkReports from "./pages/WorkReports";
+import Projects from "./pages/Projects";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ROLES } from "./config";
@@ -30,6 +39,14 @@ export default function App() {
           element={
             <ProtectedRoute roles={[ROLES.ADMIN]}>
               <Employees />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employees/:id"
+          element={
+            <ProtectedRoute roles={[ROLES.ADMIN]}>
+              <EmployeeProfile />
             </ProtectedRoute>
           }
         />
@@ -58,6 +75,14 @@ export default function App() {
           }
         />
         <Route
+          path="/reports"
+          element={
+            <ProtectedRoute roles={[ROLES.ADMIN]}>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/reports/daily"
           element={
             <ProtectedRoute roles={[ROLES.ADMIN]}>
@@ -65,6 +90,20 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/clients" element={<Clients />} />
+        <Route
+          path="/salaries"
+          element={
+            <ProtectedRoute roles={[ROLES.ADMIN]}>
+              <Salaries />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/work-reports" element={<WorkReports />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/leaves" element={<Leaves />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
 

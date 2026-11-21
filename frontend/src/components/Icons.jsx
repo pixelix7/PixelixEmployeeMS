@@ -164,6 +164,82 @@ export const LockIcon = (p) => (
   </svg>
 );
 
+// Folder, for client projects
+export const FolderIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+  </svg>
+);
+
+// Notepad with a pen, for daily work reports
+export const NotepadIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-7" />
+    <path d="M8 8h5M8 12h4M8 16h6" />
+    <path d="M18.5 2.5a2.1 2.1 0 013 3L15 12l-4 1 1-4z" />
+  </svg>
+);
+
+// Indian rupee sign, for salary
+export const RupeeIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M6 4h12M6 9h12M14 20L7 13h3a4.5 4.5 0 000-9" />
+  </svg>
+);
+
+export const HistoryIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M3 12a9 9 0 109-9 9.7 9.7 0 00-6.7 2.7L3 8" />
+    <path d="M3 3v5h5M12 7v5l3 2" />
+  </svg>
+);
+
+// Briefcase, for clients
+export const BriefcaseIcon = (p) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="7" width="18" height="13" rx="2" />
+    <path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18" />
+  </svg>
+);
+
+export const GlobeIcon = (p) => (
+  <svg {...base} {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" />
+  </svg>
+);
+
+// Checklist, for assigned tasks
+export const TaskIcon = (p) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="3" width="18" height="18" rx="3" />
+    <path d="M8 12l3 3 5-6" />
+  </svg>
+);
+
+export const BellIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9" />
+    <path d="M10.3 21a1.94 1.94 0 003.4 0" />
+  </svg>
+);
+
+export const PinIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M12 17v5" />
+    <path d="M9 10.76a2 2 0 01-1.11 1.79l-1.78.9A2 2 0 005 15.24V17h14v-1.76a2 2 0 00-1.11-1.79l-1.78-.9A2 2 0 0115 10.76V7a1 1 0 011-1 2 2 0 000-4H8a2 2 0 000 4 1 1 0 011 1z" />
+  </svg>
+);
+
+// Beach umbrella, for leave
+export const LeaveIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M3 12a9 9 0 0118 0z" />
+    <path d="M12 12v7a2 2 0 01-4 0" />
+    <path d="M12 3v1" />
+  </svg>
+);
+
 export const CalendarIcon = (p) => (
   <svg {...base} {...p}>
     <rect x="3" y="4.5" width="18" height="16" rx="2" />
@@ -237,5 +313,12 @@ export const ReportIcon = (p) => (
   <svg {...base} width={20} height={20} {...p}>
     <rect x="3.5" y="3.5" width="17" height="17" rx="2" />
     <path d="M8 16v-4M12 16V8M16 16v-6" />
+  </svg>
+);
+
+export const PowerIcon = (p) => (
+  <svg {...base} width={16} height={16} {...p}>
+    <path d="M12 3v9" />
+    <path d="M6.4 6.6a8 8 0 1011.2 0" />
   </svg>
 );

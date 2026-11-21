@@ -155,6 +155,7 @@ function ProfileCard() {
         {editable("firstName", "First Name", { autoComplete: "given-name" })}
         {editable("lastName", "Last Name", { autoComplete: "family-name" })}
         {editable("phone", "Phone Number", { inputMode: "numeric", maxLength: 10 })}
+        {readOnly("Employee ID", user.employeeId)}
         {readOnly("Email", user.email)}
         {readOnly("Role", ROLE_LABELS[user.role])}
         {readOnly("PAN", user.pan)}

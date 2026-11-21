@@ -1,11 +1,24 @@
 import mongoose from "mongoose";
 
 export const WORK_CATEGORIES = {
-  AUDIT_DEMO: "audit_demo",
-  CREATIVE: "creative_design",
-  CAMPAIGN: "campaign_post",
-  FOLLOW_UP: "client_followup",
-  ASSIGNED: "assigned_task",
+  SEO: "seo_optimization",
+  WEBSITE_AUDIT: "website_audit",
+  SOCIAL_MEDIA: "social_media",
+  GRAPHIC_DESIGN: "graphic_design",
+  CONTENT: "content_creation",
+  CAMPAIGN: "campaign_management",
+  CLIENT_REPORTING: "client_reporting",
+  ECOMMERCE: "ecommerce_listing",
+  OTHER: "other_tasks",
+};
+
+// Old type keys -> new ones (see utils/migrations.js)
+export const LEGACY_WORK_CATEGORIES = {
+  audit_demo: WORK_CATEGORIES.WEBSITE_AUDIT,
+  creative_design: WORK_CATEGORIES.GRAPHIC_DESIGN,
+  campaign_post: WORK_CATEGORIES.CAMPAIGN,
+  client_followup: WORK_CATEGORIES.OTHER,
+  assigned_task: WORK_CATEGORIES.OTHER,
 };
 
 export const WORK_STATUS = {
@@ -17,9 +30,9 @@ export const WORK_STATUS = {
   CANCELLED: "cancelled",
 };
 
-// Audits/demos and client follow-ups end with an outcome (won / lost);
+// Website audits (pitched to prospects) end with an outcome (won / lost);
 // everything else is simply completed.
-const OUTCOME_CATEGORIES = [WORK_CATEGORIES.AUDIT_DEMO, WORK_CATEGORIES.FOLLOW_UP];
+export const OUTCOME_CATEGORIES = [WORK_CATEGORIES.WEBSITE_AUDIT];
 
 export const statusesFor = (category) => [
   WORK_STATUS.PENDING,

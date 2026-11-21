@@ -1,0 +1,174 @@
+/* ---------- Announcement card (dashboard panel + page) ---------- */
+.ann-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ann-stack.is-refreshing {
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.ann-card {
+  position: relative;
+  padding: 18px 22px;
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--sand);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.ann-card.is-important {
+  border-left-color: #b42318;
+  background: linear-gradient(90deg, rgba(180, 35, 24, 0.05), transparent 45%), var(--card);
+}
+
+.ann-card.is-expired {
+  opacity: 0.6;
+}
+
+.ann-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.ann-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ann-tags:empty {
+  display: none;
+}
+
+.ann-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.06);
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ann-tag-pin {
+  background: rgba(196, 98, 58, 0.12);
+  color: var(--clay);
+}
+
+.ann-tag-important {
+  background: rgba(180, 35, 24, 0.1);
+  color: #b42318;
+}
+
+.ann-tag-new {
+  background: var(--terra);
+  color: var(--cream);
+}
+
+.ann-when {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.ann-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ann-message {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.ann-message.is-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ann-meta {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+/* Dashboard panel */
+.ann-panel {
+  margin-bottom: 32px;
+}
+
+.ann-panel .ann-stack {
+  padding: 20px 24px 24px;
+}
+
+.ann-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ann-panel-title svg {
+  color: var(--terra);
+}
+
+.ann-count {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--terra);
+  color: var(--cream);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ann-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ann-mark {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ann-mark:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+@media (max-width: 639px) {
+  .ann-card {
+    padding: 16px;
+  }
+
+  .ann-panel .ann-stack {
+    padding: 16px;
+  }
+
+  .ann-panel .panel-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

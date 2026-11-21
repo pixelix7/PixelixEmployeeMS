@@ -39,11 +39,13 @@ export const createWorkItem = async (req, res) => {
     if (!target || target.role !== ROLES.DIGITAL_MARKETING) {
       throw new AppError("Choose a digital marketing team member to assign this to", 400);
     }
+    if (target.isActive === false) {
+      throw new AppError(`${target.firstName} is deactivated and can't be assigned work`, 400);
+    }
     owner = target._id;
     assignedBy = req.user._id;
-    category = category || WORK_CATEGORIES.ASSIGNED;
-  } else if (category === WORK_CATEGORIES.ASSIGNED) {
-    throw new AppError("Assigned tasks come from an admin — pick another category", 400);
+    // Admin-assigned work is marked by assignedBy; the type is any category
+    category = category || WORK_CATEGORIES.OTHER;
   }
 
   const status = clean(body.status) || WORK_STATUS.PENDING;
@@ -163,12 +165,7 @@ export const updateWorkItem = async (req, res) => {
       if (body[field] !== undefined) item[field] = clean(body[field]);
     }
     if (body.dueDate !== undefined) item.dueDate = parseDue(body.dueDate);
-    if (body.category !== undefined) {
-      if (!admin && body.category === WORK_CATEGORIES.ASSIGNED) {
-        throw new AppError("Assigned tasks come from an admin — pick another category", 400);
-      }
-      item.category = body.category;
-    }
+    if (body.category !== undefined) item.category = body.category;
   }
 
   const newStatus = clean(body.status);

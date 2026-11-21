@@ -15,7 +15,7 @@ import {
   styleHeader,
 } from "./monthlyReportXlsx.js";
 
-const CALL_STATUS_LABELS = {
+export const CALL_STATUS_LABELS = {
   new: "New (not called)",
   no_answer: "No answer",
   busy: "Busy",
@@ -26,7 +26,7 @@ const CALL_STATUS_LABELS = {
   invalid: "Wrong number",
 };
 
-const SOURCE_LABELS = {
+export const SOURCE_LABELS = {
   instagram: "Instagram",
   facebook: "Facebook",
   amazon: "Amazon",
@@ -34,15 +34,19 @@ const SOURCE_LABELS = {
   other: "Other",
 };
 
-const WORK_CATEGORY_LABELS = {
-  audit_demo: "Audit / Demo",
-  creative_design: "Creative / Design",
-  campaign_post: "Campaign / Post",
-  client_followup: "Client / Lead Follow-up",
-  assigned_task: "Assigned Task",
+export const WORK_CATEGORY_LABELS = {
+  seo_optimization: "SEO Optimization",
+  website_audit: "Website Audit",
+  social_media: "Social Media Management",
+  graphic_design: "Graphic Designing",
+  content_creation: "Content Creation",
+  campaign_management: "Campaign Management",
+  client_reporting: "Client Reporting",
+  ecommerce_listing: "E-commerce Listing",
+  other_tasks: "Other Tasks",
 };
 
-const WORK_STATUS_LABELS = {
+export const WORK_STATUS_LABELS = {
   pending: "To do",
   in_progress: "In progress",
   completed: "Completed",
@@ -98,7 +102,8 @@ const emptyNote = (sheet, text, width) => {
   row.getCell(1).font = { italic: true, color: { argb: "FF6B5B54" } };
 };
 
-export function dailyReportWorkbook(report, { generatedBy } = {}) {
+// `scope`: e.g. an employee's name, added to the titles
+export function dailyReportWorkbook(report, { generatedBy, scope } = {}) {
   const wb = new ExcelJS.Workbook();
   wb.creator = generatedBy || "EMS";
   wb.created = new Date();
@@ -136,7 +141,7 @@ export function dailyReportWorkbook(report, { generatedBy } = {}) {
     { header: "Won", width: 7 },
     { header: "Lost", width: 7 },
   ];
-  const summary = makeSheet(wb, "Summary", `Daily Report — ${day}`, subtitle, columns, TERRA);
+  const summary = makeSheet(wb, "Summary", `Daily Report — ${scope ? `${scope} — ` : ""}${day}`, subtitle, columns, TERRA);
   summary.views = [{ state: "frozen", ySplit: 4, xSplit: 2 }];
 
   report.rows.forEach((r, i) => {

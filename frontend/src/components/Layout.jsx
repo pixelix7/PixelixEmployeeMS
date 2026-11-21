@@ -3,6 +3,13 @@ import {NavLink, Outlet} from "react-router-dom";
 import {useAuth} from "../context/useAuth";
 import {APP_NAME, ROLES, ROLE_LABELS} from "../config";
 import {
+    LeaveIcon,
+    BellIcon,
+    TaskIcon,
+    BriefcaseIcon,
+    RupeeIcon,
+    NotepadIcon,
+    FolderIcon,
     CalendarIcon,
     ChevronRightIcon,
     ClipboardIcon,
@@ -34,23 +41,35 @@ const NAV_ITEMS = [
         roles: [ROLES.ADMIN],
     },
     {
-        to: "/reports/daily",
-        label: "Daily Report",
+        to: "/reports",
+        label: "Reports",
         Icon: ReportIcon,
         roles: [ROLES.ADMIN],
     },
     {
         to: "/leads",
-        label: "Leads (Telecaller)",
+        label: "Leads",
         Icon: PhoneIcon,
         roles: [ROLES.TELECALLER, ROLES.ADMIN],
     },
     {
         to: "/work",
-        label: "Work Log (Digital Marketing)",
+        label: "Work Log",
         Icon: ClipboardIcon,
         roles: [ROLES.DIGITAL_MARKETING, ROLES.ADMIN],
     },
+    {to: "/clients", label: "Clients", Icon: BriefcaseIcon},
+    {to: "/projects", label: "Projects", Icon: FolderIcon},
+    {
+        to: "/salaries",
+        label: "Salary & Incentives",
+        Icon: RupeeIcon,
+        roles: [ROLES.ADMIN],
+    },
+    {to: "/work-reports", label: "Work Reports", Icon: NotepadIcon},
+    {to: "/tasks", label: "Tasks", Icon: TaskIcon},
+    {to: "/announcements", label: "Announcements", Icon: BellIcon},
+    {to: "/leaves", label: "Leave", Icon: LeaveIcon},
     {to: "/settings", label: "Settings", Icon: SettingsIcon},
 ];
 
@@ -112,6 +131,7 @@ export default function Layout() {
                         </div>
                         <div className="sidebar-user-role">
                             {ROLE_LABELS[user.role]}
+                            {user.employeeId && ` · ${user.employeeId}`}
                         </div>
                     </div>
                 </div>

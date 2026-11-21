@@ -212,3 +212,211 @@
     flex-wrap: wrap;
   }
 }
+
+/* ---------- Calendar tab ---------- */
+.att-picker .cal-person {
+  min-width: 280px;
+}
+
+.cal-month-nav .button {
+  padding: 10px 12px;
+}
+
+.cal-body {
+  padding: 20px 24px 24px;
+}
+
+.cal-panel .att-chips {
+  margin-bottom: 16px;
+}
+
+/* ---------- Holidays tab ---------- */
+.hol-layout {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.hol-form {
+  display: grid;
+  gap: 14px;
+  padding: 20px 24px 24px;
+}
+
+.hol-form .form-field > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.hol-form .form-hint {
+  margin: 0;
+}
+
+.hol-year {
+  padding: 6px 10px;
+}
+
+.hol-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hol-list li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+}
+
+.hol-list li + li {
+  border-top: 1px solid rgba(196, 98, 58, 0.1);
+}
+
+.hol-list li.is-past {
+  opacity: 0.55;
+}
+
+.hol-date {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  line-height: 1;
+}
+
+.hol-date strong {
+  font-size: 18px;
+}
+
+.hol-date small {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.hol-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.hol-main p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.hol-main .hol-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.hol-delete {
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--ink-faint);
+}
+
+.hol-delete:hover {
+  background: rgba(180, 35, 24, 0.08);
+  color: #b42318;
+}
+
+.hol-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #b42318;
+}
+
+.hol-confirm .button {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+@media (max-width: 1023px) {
+  .hol-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .att-head {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 639px) {
+  .att-picker .cal-person {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .cal-body {
+    padding: 16px 12px;
+  }
+}
+
+/* Daily cards that filter the list */
+.att-filter-card {
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.att-filter-card:hover {
+  border-color: rgba(196, 98, 58, 0.45);
+}
+
+.att-filter-card.is-active {
+  border-color: var(--terra);
+  background: rgba(196, 98, 58, 0.06);
+  box-shadow: 0 0 0 2px rgba(196, 98, 58, 0.25);
+}
+
+.att-filter-card.is-active .stat-icon {
+  background: var(--terra);
+  color: var(--cream);
+}
+
+.att-show-all {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.att-detail {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.att-detail strong {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.att-detail.is-late strong {
+  color: var(--clay);
+}
+
+.att-detail small {
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.att-call {
+  font-weight: 600;
+  color: var(--terra);
+  text-decoration: none;
+}
+
+.att-call:hover {
+  text-decoration: underline;
+}

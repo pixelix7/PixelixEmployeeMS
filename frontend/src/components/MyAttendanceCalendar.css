@@ -1,0 +1,135 @@
+.my-cal {
+  margin-bottom: 32px;
+}
+
+.my-cal.is-refreshing {
+  opacity: 0.6;
+}
+
+.my-cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.my-cal-nav span {
+  min-width: 120px;
+  text-align: center;
+}
+
+.my-cal-nav button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.my-cal-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.my-cal-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 24px;
+  padding: 20px 24px 24px;
+}
+
+.my-cal-main .att-chips {
+  margin-bottom: 14px;
+}
+
+.my-cal-side {
+  padding-left: 20px;
+  border-left: 1px solid var(--card-border);
+}
+
+.my-cal-side-title {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.my-cal-side ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.my-cal-side li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.my-cal-side p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.my-cal-side .my-cal-hname {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.my-cal-none {
+  font-size: 13px;
+}
+
+/* Same date badge as the admin holiday list */
+.my-cal .hol-date {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  line-height: 1;
+}
+
+.my-cal .hol-date strong {
+  font-size: 16px;
+}
+
+.my-cal .hol-date small {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+  .my-cal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .my-cal-side {
+    padding-top: 16px;
+    padding-left: 0;
+    border-top: 1px solid var(--card-border);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .my-cal-body {
+    padding: 14px 10px 18px;
+  }
+
+  .my-cal .panel-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

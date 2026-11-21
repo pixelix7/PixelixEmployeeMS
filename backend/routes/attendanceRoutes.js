@@ -6,6 +6,8 @@ import {
   getDaily,
   getMonthly,
   getMyAttendance,
+  getMyCalendar,
+  getSettings,
   getToday,
   getUserMonth,
 } from "../controllers/attendanceController.js";
@@ -17,8 +19,10 @@ const router = Router();
 // Any logged-in user can track their own attendance
 router.use(protect);
 
+router.get("/settings", getSettings);
 router.get("/today", getToday);
 router.get("/me", getMyAttendance);
+router.get("/me/calendar", getMyCalendar);
 router.post("/clock-in", clockIn);
 router.post("/clock-out", clockOut);
 

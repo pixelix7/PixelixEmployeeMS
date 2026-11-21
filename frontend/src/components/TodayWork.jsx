@@ -9,8 +9,6 @@ import { CategoryBadge, WorkStatusPill } from "./WorkBits";
 import WorkItemForm from "./WorkItemForm";
 import "./TodayWork.css";
 
-const QUICK_CATEGORIES = WORK_CATEGORIES.filter((c) => c.value !== "assigned_task");
-
 const formatDue = (iso) =>
   new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
@@ -18,7 +16,7 @@ const formatDue = (iso) =>
 export default function TodayWork() {
   const [board, setBoard] = useState(null);
   const [error, setError] = useState("");
-  const [quick, setQuick] = useState({ category: "audit_demo", title: "", client: "" });
+  const [quick, setQuick] = useState({ category: WORK_CATEGORIES[0].value, title: "", client: "" });
   const [adding, setAdding] = useState(false);
   const [busyId, setBusyId] = useState(null);
   const [editing, setEditing] = useState(null);
@@ -105,7 +103,7 @@ export default function TodayWork() {
       {/* Quick add: pick a type, type the work, Enter */}
       <form className="tw-quick" onSubmit={quickAdd}>
         <div className="chip-row">
-          {QUICK_CATEGORIES.map((c) => (
+          {WORK_CATEGORIES.map((c) => (
             <button
               key={c.value}
               type="button"

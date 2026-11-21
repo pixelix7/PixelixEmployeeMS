@@ -1,0 +1,141 @@
+.proj-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.proj-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.att-tabs button.is-active .proj-count {
+  background: rgba(251, 241, 227, 0.2);
+}
+
+.proj-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.proj-filters select {
+  width: 190px;
+}
+
+.proj-search {
+  width: 240px;
+}
+
+.proj-alert {
+  margin-bottom: 20px;
+}
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.proj-grid.is-refreshing {
+  opacity: 0.6;
+}
+
+.proj-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--card-border);
+  border-top: 4px solid var(--terra);
+  border-radius: 12px;
+  background: var(--card);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.proj-card:hover {
+  border-color: rgba(196, 98, 58, 0.45);
+  box-shadow: 0 12px 28px -18px rgba(29, 21, 18, 0.45);
+  transform: translateY(-1px);
+}
+
+.proj-card.is-planning { border-top-color: #a8a29e; }
+.proj-card.is-in_progress { border-top-color: #2563eb; }
+.proj-card.is-on_hold { border-top-color: #d97706; }
+.proj-card.is-completed { border-top-color: #15803d; }
+.proj-card.is-cancelled { border-top-color: rgba(29, 21, 18, 0.2); opacity: 0.75; }
+
+.proj-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.proj-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.proj-card-client {
+  margin-top: -6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.proj-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+@media (max-width: 1023px) {
+  .proj-filters {
+    width: 100%;
+  }
+
+  .proj-filters select,
+  .proj-search {
+    flex: 1;
+    width: auto;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 639px) {
+  .proj-toolbar .att-tabs {
+    width: 100%;
+  }
+
+  .proj-toolbar .att-tabs button {
+    padding: 8px 8px;
+  }
+
+  .proj-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .att-head > .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,189 @@
+/* ---------- Work report pieces ---------- */
+.wr-pill {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wr-pending { background: rgba(217, 119, 6, 0.14); color: #b45309; }
+.wr-approved { background: rgba(21, 128, 61, 0.12); color: #15803d; }
+.wr-rejected { background: rgba(180, 35, 24, 0.1); color: #b42318; }
+
+.wr-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin-bottom: 12px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: rgba(241, 201, 165, 0.18);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.wr-context strong {
+  color: var(--ink);
+}
+
+.wr-summary {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.wr-extra {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.wr-extra > div {
+  padding: 10px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.wr-extra span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.wr-extra p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.wr-review {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.wr-review-approved {
+  background: rgba(21, 128, 61, 0.07);
+  color: #276749;
+}
+
+.wr-review-rejected {
+  background: rgba(180, 35, 24, 0.07);
+  color: #b42318;
+}
+
+.wr-review-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.wr-form .wr-date {
+  max-width: 220px;
+  margin-bottom: 14px;
+}
+
+.wr-count {
+  text-align: right;
+}
+
+.wr-fix {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-left: 3px solid #b42318;
+  border-radius: 0 8px 8px 0;
+  background: rgba(180, 35, 24, 0.06);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.wr-fix strong {
+  color: #b42318;
+}
+
+/* Dashboard reminder */
+.wr-reminder {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--sand);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wr-reminder.is-none { border-left-color: var(--terra); }
+.wr-reminder.is-rejected { border-left-color: #b42318; background: rgba(180, 35, 24, 0.04); }
+.wr-reminder.is-approved { border-left-color: #15803d; }
+.wr-reminder.is-pending { border-left-color: #d97706; }
+
+.wr-reminder:hover {
+  border-color: rgba(196, 98, 58, 0.45);
+}
+
+.wr-reminder-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(241, 201, 165, 0.35);
+  color: var(--clay);
+}
+
+.wr-reminder-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.wr-reminder-text strong {
+  font-size: 15px;
+}
+
+.wr-reminder-text small {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.wr-reminder-action {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--terra);
+}
+
+@media (max-width: 639px) {
+  .wr-extra {
+    grid-template-columns: 1fr;
+  }
+
+  .wr-reminder {
+    flex-wrap: wrap;
+  }
+
+  .wr-reminder-action {
+    width: 100%;
+    padding-left: 54px;
+  }
+}

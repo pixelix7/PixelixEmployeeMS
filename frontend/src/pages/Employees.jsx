@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import api, { getErrorMessage } from "../api/client";
 import { useAuth } from "../context/useAuth";
@@ -5,7 +6,8 @@ import { ROLES, ROLE_LABELS } from "../config";
 import Modal from "../components/Modal";
 import EmployeeForm from "../components/EmployeeForm";
 import BulkUpload from "../components/BulkUpload";
-import { PencilIcon, PlusIcon, SearchIcon, TrashIcon, UploadIcon } from "../components/Icons";
+import { ClockIcon, PencilIcon, PlusIcon, PowerIcon, SearchIcon, TrashIcon, UploadIcon } from "../components/Icons";
+import { formatSchedule } from "../utils/format";
 import "./Dashboard.css";
 import "../components/AttendanceTable.css";
 import "./Employees.css";
@@ -17,6 +19,7 @@ export default function Employees() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [role, setRole] = useState("");
+  const [status, setStatus] = useState("active");
   const [reloadKey, setReloadKey] = useState(0);
   // `key` records which query the data belongs to; a mismatch means we're loading
   const [result, setResult] = useState({ key: null, users: [], pagination: null, error: "" });
@@ -24,7 +27,7 @@ export default function Employees() {
   const [modal, setModal] = useState(null); // { type: "add" | "edit" | "delete", employee? }
   const [toast, setToast] = useState("");
 
-  const queryKey = `${debouncedSearch}|${role}|${reloadKey}`;
+  const queryKey = `${debouncedSearch}|${role}|${status}|${reloadKey}`;
   const loading = result.key !== queryKey;
 
   // Wait until typing pauses before searching
@@ -37,7 +40,12 @@ export default function Employees() {
     let cancelled = false;
     api
       .get("/users", {
-        params: { search: debouncedSearch || undefined, role: role || undefined, limit: PAGE_SIZE },
+        params: {
+          search: debouncedSearch || undefined,
+          role: role || undefined,
+          status: status || undefined,
+          limit: PAGE_SIZE,
+        },
       })
       .then(({ data }) => {
         if (!cancelled) {
@@ -52,7 +60,7 @@ export default function Employees() {
     return () => {
       cancelled = true;
     };
-  }, [queryKey, debouncedSearch, role]);
+  }, [queryKey, debouncedSearch, role, status]);
 
   useEffect(() => {
     if (!toast) return;
@@ -67,6 +75,7 @@ export default function Employees() {
         params: {
           search: debouncedSearch || undefined,
           role: role || undefined,
+          status: status || undefined,
           limit: PAGE_SIZE,
           page: result.pagination.page + 1,
         },
@@ -85,6 +94,17 @@ export default function Employees() {
     setModal(null);
     setToast(message);
     setReloadKey((k) => k + 1);
+  };
+
+  // Activate / deactivate straight from the card
+  const setActive = async (employee, isActive) => {
+    try {
+      const { data } = await api.patch(`/users/${employee._id}`, { isActive });
+      handleSaved(data.user, data.message);
+    } catch (err) {
+      setModal(null);
+      setToast(getErrorMessage(err));
+    }
   };
 
   const { users, pagination, error } = result;
@@ -121,7 +141,7 @@ export default function Employees() {
           <input
             className="input"
             type="search"
-            placeholder="Search by name, email or phone..."
+            placeholder="Search by name, employee ID, email or phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             aria-label="Search employees"
@@ -139,6 +159,16 @@ export default function Employees() {
               {ROLE_LABELS[r]}
             </option>
           ))}
+        </select>
+        <select
+          className="input emp-filter"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          aria-label="Filter by status"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Deactivated</option>
+          <option value="">All Statuses</option>
         </select>
       </div>
 
@@ -161,6 +191,9 @@ export default function Employees() {
                   isSelf={u._id === me._id}
                   onEdit={() => setModal({ type: "edit", employee: u })}
                   onDelete={() => setModal({ type: "delete", employee: u })}
+                  onToggleActive={() =>
+                    u.isActive === false ? setActive(u, true) : setModal({ type: "deactivate", employee: u })
+                  }
                 />
               ))
             )}
@@ -221,6 +254,26 @@ export default function Employees() {
         </Modal>
       )}
 
+      {modal?.type === "deactivate" && (
+        <Modal title="Deactivate employee?" size="sm" onClose={closeModal}>
+          <p className="emp-confirm-text">
+            <strong>
+              {modal.employee.firstName} {modal.employee.lastName}
+            </strong>{" "}
+            will be logged out and won't be able to log in. Their history stays, and days from today on
+            aren't counted as absent. You can reactivate them any time.
+          </p>
+          <div className="form-actions">
+            <button type="button" className="button button-secondary" onClick={closeModal}>
+              Cancel
+            </button>
+            <button type="button" className="button button-danger" onClick={() => setActive(modal.employee, false)}>
+              Deactivate
+            </button>
+          </div>
+        </Modal>
+      )}
+
       {modal?.type === "delete" && (
         <DeleteDialog employee={modal.employee} onClose={closeModal} onDeleted={handleSaved} />
       )}
@@ -234,11 +287,26 @@ export default function Employees() {
   );
 }
 
-function EmployeeCard({ employee, isSelf, onEdit, onDelete }) {
-  const { firstName, lastName, email, role } = employee;
+function EmployeeCard({ employee, isSelf, onEdit, onDelete, onToggleActive }) {
+  const { firstName, lastName, email, role, employeeId } = employee;
+  const inactive = employee.isActive === false;
+  const navigate = useNavigate();
+  const openProfile = () => navigate(`/employees/${employee._id}`);
+  // Edit/delete buttons sit on top of the card: don't also open the profile
+  const only = (fn) => (e) => {
+    e.stopPropagation();
+    fn();
+  };
 
   return (
-    <article className="emp-card">
+    <article
+      className={`emp-card is-clickable ${inactive ? "is-inactive" : ""}`}
+      onClick={openProfile}
+      onKeyDown={(e) => e.key === "Enter" && e.target === e.currentTarget && openProfile()}
+      tabIndex={0}
+      role="link"
+      aria-label={`Open ${firstName} ${lastName}'s profile`}
+    >
       <div className="emp-cover">
         <span className="emp-initials">
           {firstName[0]} {lastName[0]}
@@ -246,19 +314,32 @@ function EmployeeCard({ employee, isSelf, onEdit, onDelete }) {
       </div>
 
       <div className="emp-badges">
+        {employeeId && <span className="emp-badge emp-badge-id">{employeeId}</span>}
         <span className="emp-badge">{ROLE_LABELS[role]}</span>
         {isSelf && <span className="emp-badge emp-badge-you">You</span>}
+        {inactive && <span className="emp-badge emp-badge-off">Deactivated</span>}
       </div>
 
       <div className="emp-actions">
-        <button type="button" onClick={onEdit} aria-label={`Edit ${firstName} ${lastName}`}>
+        <button type="button" onClick={only(onEdit)} aria-label={`Edit ${firstName} ${lastName}`}>
           <PencilIcon />
         </button>
         {!isSelf && (
           <button
             type="button"
+            className={inactive ? "is-good" : "is-warn"}
+            onClick={only(onToggleActive)}
+            aria-label={`${inactive ? "Reactivate" : "Deactivate"} ${firstName} ${lastName}`}
+            title={inactive ? "Reactivate" : "Deactivate"}
+          >
+            <PowerIcon />
+          </button>
+        )}
+        {!isSelf && (
+          <button
+            type="button"
             className="is-danger"
-            onClick={onDelete}
+            onClick={only(onDelete)}
             aria-label={`Delete ${firstName} ${lastName}`}
           >
             <TrashIcon />
@@ -271,6 +352,12 @@ function EmployeeCard({ employee, isSelf, onEdit, onDelete }) {
           {firstName} {lastName}
         </h3>
         <p>{email}</p>
+        {role !== ROLES.ADMIN && employee.schedule && (
+          <p className={`emp-schedule ${employee.schedule.custom ? "is-custom" : ""}`}>
+            <ClockIcon width={12} height={12} />
+            {formatSchedule(employee.schedule)}
+          </p>
+        )}
       </div>
     </article>
   );

@@ -16,15 +16,21 @@ export const ROLE_LABELS = {
 export const STATUS_LABELS = {
   present: "On time",
   late: "Late",
+  half_day: "Half day",
   absent: "Absent",
   not_in: "Not in yet",
+  holiday: "Holiday",
+  leave: "On leave",
   off: "Off day",
 };
 
 // Light row fills so the day sheet can be scanned quickly
 export const STATUS_FILLS = {
   late: "FFFDF0DC",
+  half_day: "FFFFF4D6",
   absent: "FFFBE3E1",
+  holiday: "FFE6F0FA",
+  leave: "FFF1E8FB",
   off: "FFF2F0EE",
 };
 
@@ -94,12 +100,14 @@ const workDayNames = () => {
     .join(", ");
 };
 
-export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
+// `scope`: e.g. an employee's name, added to the titles
+export async function monthlyReportWorkbook(report, { generatedBy, scope } = {}) {
   const wb = new ExcelJS.Workbook();
   wb.creator = generatedBy || "EMS";
   wb.created = new Date();
 
-  const title = `Monthly Attendance Report — ${monthTitle(report.month)}`;
+  const who = scope ? `${scope} — ` : "";
+  const title = `Monthly Attendance Report — ${who}${monthTitle(report.month)}`;
   const generatedOn = officeDate(new Date()).toISOString().slice(0, 16).replace("T", " ");
   const subtitle =
     `Generated ${generatedOn} by ${generatedBy || "admin"} · ` +
@@ -122,7 +130,10 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
     { header: "Present Days", key: "present", width: 10 },
     { header: "On Time", key: "onTime", width: 9 },
     { header: "Late", key: "late", width: 8 },
+    { header: "Half Days", key: "halfDays", width: 9 },
     { header: "Absent", key: "absent", width: 9 },
+    { header: "Holidays", key: "holidays", width: 9 },
+    { header: "Leave Days", key: "leaveDays", width: 9 },
     { header: "Working Hours", key: "hours", width: 12, style: { numFmt: "[h]:mm" } },
     { header: "Avg Hours / Day", key: "avg", width: 12, style: { numFmt: "[h]:mm" } },
     { header: "Attendance %", key: "rate", width: 12, style: { numFmt: "0%" } },
@@ -150,7 +161,10 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
       r.present,
       r.onTime,
       r.late,
+      r.halfDays,
       r.absent,
+      r.holidays,
+      r.leaveDays,
       duration(r.workMinutes),
       duration(r.avgWorkMinutes),
       r.attendanceRate == null ? null : r.attendanceRate / 100,
@@ -161,12 +175,12 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
       });
     }
     // Colour the attendance rate like the app does
-    const rate = row.getCell(13);
+    const rate = row.getCell(16);
     if (r.attendanceRate != null) {
       const color = r.attendanceRate >= 90 ? "FF276749" : r.attendanceRate >= 70 ? CLAY : "FFB42318";
       rate.font = { bold: true, color: { argb: color } };
     }
-    row.getCell(10).font = r.absent > 0 ? { color: { argb: "FFB42318" } } : {};
+    row.getCell(11).font = r.absent > 0 ? { color: { argb: "FFB42318" } } : {};
   });
 
   // Totals use real formulas, so they stay right if the admin edits a cell
@@ -186,6 +200,9 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
       sum("I"),
       sum("J"),
       sum("K"),
+      sum("L"),
+      sum("M"),
+      sum("N"),
       null,
       null,
     ]);
@@ -198,12 +215,13 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
 
   summary.autoFilter = { from: { row: 4, column: 1 }, to: { row: 4, column: columns.length } };
   summary.getColumn(1).alignment = { horizontal: "center" };
-  for (let c = 6; c <= 13; c++) summary.getColumn(c).alignment = { horizontal: "center" };
+  for (let c = 6; c <= columns.length; c++) summary.getColumn(c).alignment = { horizontal: "center" };
 
   summary.addRow([]);
   const note = summary.addRow([
     "",
-    "Present Days include late days. Absent = finished work days with no check-in since the employee joined. Hours are shown as h:mm.",
+    "Present Days include late and half days. A half day counts as 0.5 in Attendance %. " +
+      "Absent = finished work days with no check-in since the employee joined (holidays and approved leave never count). Hours are shown as h:mm.",
   ]);
   note.getCell(2).font = { italic: true, size: 9, color: { argb: "FF6B5B54" } };
 
@@ -226,7 +244,7 @@ export async function monthlyReportWorkbook(report, { generatedBy } = {}) {
     { header: "Worked", width: 10, numFmt: "[h]:mm" },
   ];
 
-  addTitle(daily, `Daily Attendance — ${monthTitle(report.month)}`, subtitle, dailyColumns.length);
+  addTitle(daily, `Daily Attendance — ${who}${monthTitle(report.month)}`, subtitle, dailyColumns.length);
   dailyColumns.forEach((c, i) => {
     const col = daily.getColumn(i + 1);
     col.width = c.width;

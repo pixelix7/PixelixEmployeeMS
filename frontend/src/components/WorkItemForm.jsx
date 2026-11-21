@@ -27,7 +27,7 @@ export default function WorkItemForm({ item, defaultCategory, onSaved, onDeleted
 
   const [values, setValues] = useState(() => ({
     owner: item?.owner?._id || "",
-    category: item?.category || defaultCategory || (isAdmin ? "assigned_task" : "audit_demo"),
+    category: item?.category || defaultCategory || (isAdmin ? "other_tasks" : WORK_CATEGORIES[0].value),
     title: item?.title || "",
     client: item?.client || "",
     details: item?.details || "",
@@ -44,12 +44,11 @@ export default function WorkItemForm({ item, defaultCategory, onSaved, onDeleted
   useEffect(() => {
     if (!isAdmin || isEdit) return;
     api
-      .get("/users", { params: { role: "digital_marketing", limit: 100 } })
+      .get("/users", { params: { role: "digital_marketing", status: "active", limit: 100 } })
       .then(({ data }) => setTeam(data.users))
       .catch(() => setTeam([]));
   }, [isAdmin, isEdit]);
 
-  const categories = WORK_CATEGORIES.filter((c) => isAdmin || c.value !== "assigned_task" || item?.category === "assigned_task");
   const statuses = workStatusesFor(values.category);
 
   const set = (field, value) => {
@@ -152,7 +151,7 @@ export default function WorkItemForm({ item, defaultCategory, onSaved, onDeleted
           <div className="form-field is-wide">
             <label>Type of work</label>
             <div className="chip-row" role="radiogroup" aria-label="Type of work">
-              {categories.map((c) => (
+              {WORK_CATEGORIES.map((c) => (
                 <button
                   key={c.value}
                   type="button"

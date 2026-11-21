@@ -1,17 +1,18 @@
 import Attendance from "../models/Attendance.js";
-import Lead, { CALL_STATUS, CLOSED_STATUSES } from "../models/Lead.js";
+import Lead, { CLOSED_STATUSES } from "../models/Lead.js";
 import User, { ROLES } from "../models/User.js";
-import WorkItem, { WORK_STATUS } from "../models/WorkItem.js";
-import { statusFor } from "../controllers/attendanceController.js";
+import WorkItem from "../models/WorkItem.js";
+import { loadHolidays } from "../models/Holiday.js";
+import { loadLeaves } from "../models/LeaveRequest.js";
+import { activeOn, statusFor } from "../controllers/attendanceController.js";
 import { dateKey, endOfDay, startOfDay } from "./time.js";
+import { callStats, leadEvents, workEvents as toWorkEvents, workStats } from "./activityEvents.js";
 
 const STAFF_ROLES = [ROLES.TELECALLER, ROLES.DIGITAL_MARKETING];
-const DONE_WORK = [WORK_STATUS.COMPLETED, WORK_STATUS.WON, WORK_STATUS.LOST];
-
-const inRange = (date, from, to) => date && date >= from && date <= to;
 
 // Everything that happened on one day, for every telecaller and digital marketer
-export async function buildDailyReport(date) {
+// (or just one of them when `userId` is given)
+export async function buildDailyReport(date, { userId } = {}) {
   const today = dateKey();
   const from = startOfDay(date);
   const to = endOfDay(date);
@@ -19,11 +20,11 @@ export async function buildDailyReport(date) {
 
   // People who had joined by that day
   const users = (
-    await User.find({ role: { $in: STAFF_ROLES } }).sort({ firstName: 1, lastName: 1 })
-  ).filter((u) => dateKey(u.createdAt) <= date);
+    await User.find({ role: { $in: STAFF_ROLES }, ...(userId && { _id: userId }) }).sort({ firstName: 1, lastName: 1 })
+  ).filter((u) => activeOn(u, date));
   const ids = users.map((u) => u._id);
 
-  const [records, leads, dueLeads, workItems] = await Promise.all([
+  const [records, leads, dueLeads, workItems, holidays, leaves] = await Promise.all([
     Attendance.find({ date, user: { $in: ids } }),
     // Leads touched that day. Older leads (before the activity log) fall back to
     // createdAt / lastContactedAt.
@@ -40,64 +41,12 @@ export async function buildDailyReport(date) {
       "owner callStatus followUpAt lastContactedAt"
     ),
     WorkItem.find({ owner: { $in: ids }, "updates.at": { $gte: from, $lte: to } }),
+    loadHolidays(date, date),
+    loadLeaves(ids, date, date),
   ]);
 
-  /* ---------- Lead events ---------- */
-  const callEvents = [];
-  for (const lead of leads) {
-    const base = {
-      leadId: lead._id,
-      userId: String(lead.owner),
-      businessName: lead.businessName,
-      phone: lead.phone,
-      source: lead.source,
-    };
-    if (lead.activity?.length) {
-      for (const a of lead.activity) {
-        if (!inRange(a.at, from, to)) continue;
-        callEvents.push({
-          ...base,
-          userId: String(a.by || lead.owner),
-          kind: a.kind,
-          at: a.at,
-          status: a.status,
-          statusChanged: a.statusChanged,
-          note: a.note,
-          followUpAt: a.followUpAt,
-        });
-      }
-    } else {
-      // Legacy lead: we only know when it was added and last contacted
-      if (inRange(lead.createdAt, from, to)) {
-        callEvents.push({ ...base, kind: "added", at: lead.createdAt, status: lead.callStatus, note: lead.notes, followUpAt: lead.followUpAt });
-      }
-      if (inRange(lead.lastContactedAt, from, to) && lead.lastContactedAt - lead.createdAt > 1000) {
-        callEvents.push({ ...base, kind: "update", at: lead.lastContactedAt, status: lead.callStatus, statusChanged: true, note: lead.notes, followUpAt: lead.followUpAt });
-      }
-    }
-  }
-  callEvents.sort((a, b) => a.at - b.at);
-
-  /* ---------- Work events ---------- */
-  const workEvents = [];
-  for (const item of workItems) {
-    for (const u of item.updates) {
-      if (!inRange(u.at, from, to)) continue;
-      workEvents.push({
-        itemId: item._id,
-        userId: String(item.owner),
-        byOwner: String(u.by) === String(item.owner),
-        at: u.at,
-        category: item.category,
-        title: item.title,
-        client: item.client,
-        status: u.status, // null = note only
-        note: u.note,
-        assigned: Boolean(item.assignedBy),
-      });
-    }
-  }
-  workEvents.sort((a, b) => a.at - b.at);
+  const callEvents = leadEvents(leads, from, to);
+  const workEvents = toWorkEvents(workItems, from, to);
 
   /* ---------- One row per employee ---------- */
   const recordByUser = new Map(records.map((r) => [String(r.user), r]));
@@ -113,7 +62,7 @@ export async function buildDailyReport(date) {
     const row = {
       user,
       attendance: {
-        status: statusFor(date, record, today),
+        status: statusFor(date, record, today, holidays, user, leaves.get(id)),
         firstIn: record?.checkIn || null,
         lastOut: record?.checkOut || null,
         working: Boolean(record?.activeSince) && date === today,
@@ -124,23 +73,9 @@ export async function buildDailyReport(date) {
     };
 
     if (user.role === ROLES.TELECALLER) {
-      const mine = callEvents.filter((e) => e.userId === id);
-      // A "call" = any update, or adding a lead that was already called
-      const calls = mine.filter((e) => e.kind === "update" || e.status !== CALL_STATUS.NEW);
-      const changedTo = (status) =>
-        new Set(
-          mine
-            .filter((e) => e.status === status && (e.statusChanged || e.kind === "added"))
-            .map((e) => String(e.leadId))
-        ).size;
       const due = dueLeads.filter((l) => String(l.owner) === id);
       row.telecaller = {
-        leadsAdded: mine.filter((e) => e.kind === "added").length,
-        callsLogged: calls.length,
-        leadsCalled: new Set(calls.map((e) => String(e.leadId))).size,
-        interested: changedTo(CALL_STATUS.INTERESTED),
-        converted: changedTo(CALL_STATUS.CONVERTED),
-        notInterested: changedTo(CALL_STATUS.NOT_INTERESTED),
+        ...callStats(callEvents.filter((e) => e.userId === id)),
         followUpsDue: due.length,
         // Still open and not touched since it was due
         followUpsMissed: due.filter(
@@ -153,18 +88,10 @@ export async function buildDailyReport(date) {
     }
 
     if (user.role === ROLES.DIGITAL_MARKETING) {
-      const mine = workEvents.filter((e) => e.userId === id);
-      const byThem = mine.filter((e) => e.byOwner);
-      const closedItems = workItems.filter(
-        (i) => String(i.owner) === id && inRange(i.closedAt, from, to) && DONE_WORK.includes(i.status)
-      );
+      const myItems = workItems.filter((i) => String(i.owner) === id);
       row.marketing = {
-        updates: byThem.length,
-        itemsWorkedOn: new Set(byThem.map((e) => String(e.itemId))).size,
-        itemsAdded: workItems.filter((i) => String(i.owner) === id && i.date === date).length,
-        closed: closedItems.length,
-        won: closedItems.filter((i) => i.status === WORK_STATUS.WON).length,
-        lost: closedItems.filter((i) => i.status === WORK_STATUS.LOST).length,
+        ...workStats(workEvents.filter((e) => e.userId === id), myItems, from, to),
+        itemsAdded: myItems.filter((i) => i.date === date).length,
       };
     }
 
@@ -178,10 +105,13 @@ export async function buildDailyReport(date) {
   return {
     date,
     isToday: date === today,
+    holiday: holidays.get(date) || null,
     summary: {
       employees: rows.length,
-      present: att("present") + att("late"),
-      late: att("late"),
+      present: rows.filter((r) => r.sessions.length).length,
+      late: rows.filter((r) => recordByUser.get(String(r.user._id))?.status === "late").length,
+      halfDays: att("half_day"),
+      onLeave: att("leave"),
       absent: att("absent"),
       notIn: att("not_in"),
       workMinutes: sum((r) => r.attendance.workMinutes),

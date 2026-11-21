@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import api, { getErrorMessage } from "../api/client";
 import { ROLES, ROLE_LABELS } from "../config";
 import Modal from "../components/Modal";
@@ -16,6 +16,7 @@ import {
   UsersIcon,
 } from "../components/Icons";
 import { formatDuration, formatLongDay, formatTime, todayKey } from "../utils/format";
+import { saveFile } from "../utils/saveFile";
 import "./Dashboard.css";
 import "./Employees.css";
 import "../components/AttendanceTable.css";
@@ -55,7 +56,7 @@ export default function DailyReport() {
     {
       label: data?.isToday ? "Not In Yet" : "Absent",
       value: s && (data.isToday ? s.notIn : s.absent),
-      sub: "No check-in",
+      sub: s?.onLeave ? `${s.onLeave} on leave` : "No check-in",
       Icon: AlarmIcon,
     },
     { label: "Hours Worked", value: s && formatDuration(s.workMinutes), sub: "Team total", Icon: ClockIcon },
@@ -272,6 +273,9 @@ function PersonDay({ row, data, onClose }) {
             Session {i + 1}: <strong>{formatTime(s.in)}</strong> – {s.out ? formatTime(s.out) : "now"}
           </span>
         ))}
+        <Link to={`/employees/${row.user._id}`} className="dr-profile-link">
+          View full profile →
+        </Link>
       </div>
 
       <div className="panel">
@@ -329,14 +333,7 @@ function ExportButton({ date }) {
     setError("");
     try {
       const res = await api.get("/reports/daily/export", { params: { date }, responseType: "blob" });
-      const url = URL.createObjectURL(res.data);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `daily-report-${date}.xlsx`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      await saveFile(res.data, `daily-report-${date}.xlsx`);
     } catch (err) {
       let message = getErrorMessage(err);
       if (err.response?.data instanceof Blob) {

@@ -2,6 +2,8 @@ import crypto from "node:crypto";
 import User, { ROLES } from "../models/User.js";
 import AppError from "../utils/AppError.js";
 import pick from "../utils/pick.js";
+import { buildEmployeeProfile } from "../utils/employeeProfile.js";
+import { MONTH_RE, monthKey } from "../utils/time.js";
 
 // Fields an admin may change through PATCH /api/users/:id.
 // Password has its own route so it is never changed by accident.
@@ -13,6 +15,13 @@ const ADMIN_EDITABLE_FIELDS = [
   "pan",
   "aadhar",
   "role",
+  // Work schedule (null / [] = use the company schedule)
+  "officeStart",
+  "officeEnd",
+  "graceMinutes",
+  "workDays",
+  // Account status
+  "isActive",
 ];
 
 const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -25,8 +34,9 @@ const findUserOr404 = async (id) => {
 
 // Blocks any change that would leave the system with no admin
 const ensureNotLastAdmin = async (user, action) => {
-  if (user.role !== ROLES.ADMIN) return;
-  const adminCount = await User.countDocuments({ role: ROLES.ADMIN });
+  if (user.role !== ROLES.ADMIN || !user.isActive) return;
+  // Only active admins can actually run the system
+  const adminCount = await User.countDocuments({ role: ROLES.ADMIN, isActive: { $ne: false } });
   if (adminCount <= 1) {
     throw new AppError(`Cannot ${action} the only admin`, 400);
   }
@@ -38,6 +48,11 @@ export const listUsers = async (req, res) => {
   const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 100);
 
   const filter = {};
+
+  // ?status=active | inactive
+  if (req.query.status === "active") filter.isActive = { $ne: false };
+  else if (req.query.status === "inactive") filter.isActive = false;
+  else if (req.query.status) throw new AppError("Invalid status filter", 400);
 
   if (req.query.role) {
     if (!Object.values(ROLES).includes(req.query.role)) {
@@ -53,6 +68,7 @@ export const listUsers = async (req, res) => {
       { lastName: regex },
       { email: regex },
       { phone: regex },
+      { employeeId: regex },
     ];
   }
 
@@ -71,14 +87,21 @@ export const listUsers = async (req, res) => {
 };
 
 // GET /api/users/stats -> { total, byRole: { admin, telecaller, digital_marketing } }
+// Counts active employees only; deactivated ones are reported separately
 export const getUserStats = async (req, res) => {
-  const groups = await User.aggregate([{ $group: { _id: "$role", count: { $sum: 1 } } }]);
+  const [groups, inactive] = await Promise.all([
+    User.aggregate([
+      { $match: { isActive: { $ne: false } } },
+      { $group: { _id: "$role", count: { $sum: 1 } } },
+    ]),
+    User.countDocuments({ isActive: false }),
+  ]);
 
   const byRole = Object.fromEntries(Object.values(ROLES).map((role) => [role, 0]));
   for (const { _id, count } of groups) byRole[_id] = count;
 
   const total = Object.values(byRole).reduce((sum, n) => sum + n, 0);
-  res.json({ total, byRole });
+  res.json({ total, byRole, inactive });
 };
 
 // GET /api/users/:id
@@ -100,10 +123,32 @@ export const updateUser = async (req, res) => {
     await ensureNotLastAdmin(user, "change the role of");
   }
 
+  if ("isActive" in updates) {
+    updates.isActive = Boolean(updates.isActive);
+    if (!updates.isActive && user.isActive) {
+      if (user.id === req.user.id) throw new AppError("You can't deactivate your own account", 400);
+      await ensureNotLastAdmin(user, "deactivate");
+    }
+  }
+
+  // An empty value means "use the company schedule"
+  for (const field of ["officeStart", "officeEnd"]) {
+    if (updates[field] === "") updates[field] = null;
+  }
+  if (updates.graceMinutes === "") updates.graceMinutes = null;
+  if (updates.workDays === null) updates.workDays = [];
+
+  const wasActive = user.isActive;
   user.set(updates);
   await user.save(); // save() runs schema validators
 
-  res.json({ message: "User updated", user });
+  const message =
+    wasActive && !user.isActive
+      ? `${user.firstName} has been deactivated`
+      : !wasActive && user.isActive
+        ? `${user.firstName} has been reactivated`
+        : "User updated";
+  res.json({ message, user });
 };
 
 // PATCH /api/users/:id/password  (admin resets someone's password)
@@ -239,4 +284,14 @@ export const bulkCreateUsers = async (req, res) => {
     failed: rows.length - created,
     results,
   });
+};
+
+/* ---------------- Employee profile ---------------- */
+
+// GET /api/users/:id/profile?month=2026-11
+export const getEmployeeProfile = async (req, res) => {
+  const month = req.query.month || monthKey();
+  if (!MONTH_RE.test(month)) throw new AppError("month must look like YYYY-MM", 400);
+  if (month > monthKey()) throw new AppError("month can't be in the future", 400);
+  res.json(await buildEmployeeProfile(req.params.id, month));
 };

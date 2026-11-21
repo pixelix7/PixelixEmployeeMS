@@ -1,3 +1,5 @@
+import { saveFile } from "./saveFile";
+
 // Small CSV reader/writer (handles quotes, commas and new lines inside quotes,
 // Windows line endings and the Excel BOM). Enough for our upload template.
 
@@ -50,15 +52,9 @@ const escapeCell = (value) => {
 
 export const toCsv = (rows) => rows.map((r) => r.map(escapeCell).join(",")).join("\r\n");
 
-// Triggers a download in the browser. The BOM makes Excel read it as UTF-8.
+// Download in the browser, save/share in the Android app.
+// The BOM makes Excel read it as UTF-8.
 export function downloadCsv(filename, rows) {
   const blob = new Blob(["\uFEFF" + toCsv(rows)], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return saveFile(blob, filename);
 }

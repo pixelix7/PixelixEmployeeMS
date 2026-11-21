@@ -1,0 +1,243 @@
+.wr-alert {
+  margin-bottom: 20px;
+}
+
+/* Employee: today */
+.wr-today {
+  margin-bottom: 24px;
+  border-left: 4px solid var(--terra);
+}
+
+.wr-today-date {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.wr-today-body {
+  padding: 20px 24px 24px;
+}
+
+.wr-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.wr-month {
+  width: 180px;
+}
+
+.wr-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wr-item {
+  padding: 18px 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+.wr-item:first-child {
+  border-top: 0;
+}
+
+.wr-item.is-rejected {
+  background: rgba(180, 35, 24, 0.03);
+}
+
+.wr-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.wr-when {
+  font-size: 12px;
+}
+
+.wr-link {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--terra);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wr-link:hover {
+  text-decoration: underline;
+}
+
+/* Admin */
+.att-tabs .wr-count-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 21, 18, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.att-tabs button.is-active .wr-count-badge {
+  background: rgba(251, 241, 227, 0.2);
+}
+
+.att-tabs button.has-alert:not(.is-active) .wr-count-badge {
+  background: rgba(217, 119, 6, 0.16);
+  color: #b45309;
+}
+
+.wr-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wr-filter {
+  width: 240px;
+}
+
+.wr-filter-date {
+  width: 180px;
+}
+
+.wr-approve-all {
+  margin-left: auto;
+}
+
+.wr-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wr-cards.is-refreshing {
+  opacity: 0.6;
+}
+
+.wr-card {
+  padding: 18px 22px;
+  border-left: 4px solid #d97706;
+}
+
+.wr-card.is-approved { border-left-color: #15803d; }
+.wr-card.is-rejected { border-left-color: #b42318; }
+
+.wr-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.wr-card-head .person-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.wr-card-who {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.wr-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a.wr-name:hover {
+  color: var(--terra);
+}
+
+.wr-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.wr-resub {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.wr-reject:hover:not(:disabled) {
+  border-color: rgba(180, 35, 24, 0.45);
+  color: #b42318;
+}
+
+.wr-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 639px) {
+  .wr-today-body,
+  .wr-item {
+    padding: 16px;
+  }
+
+  .wr-card {
+    padding: 16px;
+  }
+
+  .wr-card-head {
+    flex-wrap: wrap;
+  }
+
+  .wr-card-meta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .wr-filter,
+  .wr-filter-date {
+    flex: 1;
+    width: auto;
+  }
+
+  .wr-approve-all {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .wr-card-actions .button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .att-head > .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

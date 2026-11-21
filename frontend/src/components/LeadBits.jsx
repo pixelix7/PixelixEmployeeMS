@@ -1,5 +1,6 @@
 import { CALL_STATUS_LABELS } from "../config";
 import { formatPhone } from "../utils/format";
+import { isNativeApp } from "../utils/saveFile";
 import { PhoneIcon, WhatsAppIcon } from "./Icons";
 import "./LeadBits.css";
 
@@ -24,7 +25,8 @@ export function ContactLinks({ phone, compact = false }) {
       <a
         className="contact-btn is-wa"
         href={`https://wa.me/91${phone}`}
-        target="_blank"
+        // New tab on the website; in the Android app the link opens WhatsApp itself
+        target={isNativeApp() ? undefined : "_blank"}
         rel="noreferrer"
         title="Open WhatsApp chat"
         aria-label={`WhatsApp ${formatPhone(phone)}`}

@@ -4,6 +4,7 @@ import {
   getUser,
   getUserStats,
   bulkCreateUsers,
+  getEmployeeProfile,
   updateUser,
   resetUserPassword,
   deleteUser,
@@ -19,6 +20,7 @@ router.use(protect, authorize(ROLES.ADMIN));
 router.get("/", listUsers);
 router.get("/stats", getUserStats); // must come before "/:id"
 router.post("/bulk", bulkCreateUsers);
+router.get("/:id/profile", getEmployeeProfile);
 router.get("/:id", getUser);
 router.patch("/:id", updateUser);
 router.patch("/:id/password", resetUserPassword);

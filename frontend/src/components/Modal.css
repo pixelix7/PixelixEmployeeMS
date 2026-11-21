@@ -26,6 +26,10 @@
   max-width: 768px;
 }
 
+.modal-md {
+  max-width: 560px;
+}
+
 .modal-sm {
   max-width: 440px;
 }

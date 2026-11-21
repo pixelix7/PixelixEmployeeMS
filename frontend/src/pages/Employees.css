@@ -274,3 +274,58 @@
     width: 100%;
   }
 }
+
+.emp-card.is-clickable {
+  cursor: pointer;
+}
+
+.emp-card.is-clickable:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 2px;
+}
+
+/* Deactivated employees */
+.emp-card.is-inactive .emp-cover {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.emp-card.is-inactive .emp-info h3 {
+  color: var(--ink-soft);
+}
+
+.emp-badge-off {
+  background: #b42318;
+  color: #fff;
+}
+
+.emp-actions button.is-warn:hover {
+  color: #b45309;
+}
+
+.emp-actions button.is-good:hover {
+  color: #2f855a;
+}
+
+.emp-schedule {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px !important;
+  color: var(--ink-faint) !important;
+  font-size: 11px !important;
+}
+
+.emp-schedule.is-custom {
+  color: var(--clay) !important;
+  font-weight: 500;
+}
+
+/* Employee ID badge on the card */
+.emp-badge-id {
+  background: var(--ink);
+  color: var(--sand);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}

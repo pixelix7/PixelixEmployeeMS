@@ -93,3 +93,43 @@ export const formatWhen = (iso) => {
 // "98765 43210"
 export const formatPhone = (digits) =>
   digits?.length === 10 ? `${digits.slice(0, 5)} ${digits.slice(5)}` : digits;
+
+const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// [1,2,3,4,5,6] -> "Mon–Sat", [1,3,5] -> "Mon, Wed, Fri" (week starts Monday)
+export const formatWorkDays = (days = []) => {
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  const sorted = order.filter((d) => days.includes(d));
+  if (!sorted.length) return "No days";
+  if (sorted.length === 7) return "Every day";
+  // Group consecutive days into ranges
+  const groups = [];
+  for (const d of sorted) {
+    const last = groups.at(-1);
+    if (last && order.indexOf(d) === order.indexOf(last.at(-1)) + 1) last.push(d);
+    else groups.push([d]);
+  }
+  return groups
+    .map((g) => (g.length >= 3 ? `${DAY_SHORT[g[0]]}–${DAY_SHORT[g.at(-1)]}` : g.map((d) => DAY_SHORT[d]).join(", ")))
+    .join(", ");
+};
+
+// "09:30" + 15 -> "09:45"
+export const addMinutes = (hm, minutes) => {
+  const [h, m] = hm.split(":").map(Number);
+  const total = h * 60 + m + Number(minutes || 0);
+  return `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+};
+
+// One line: "9:30 am – 6:30 pm · late after 9:45 am · Mon–Sat"
+export const formatSchedule = (s) =>
+  s ? `${formatClock(s.officeStart)} – ${formatClock(s.officeEnd)} · late after ${formatClock(s.lateAfter)} · ${formatWorkDays(s.workDays)}` : "";
+
+// "2026-10-05" -> "5 Oct 2026"
+export const formatDate = (key) =>
+  key
+    ? new Date(`${key}T12:00:00Z`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })
+    : "—";
+
+// 45000 -> "₹45,000"
+export const formatMoney = (n) => (n == null || n === "" ? "—" : `₹${Number(n).toLocaleString("en-IN")}`);

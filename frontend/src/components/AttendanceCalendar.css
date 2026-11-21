@@ -1,0 +1,201 @@
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.cal-weekday {
+  padding: 4px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cal-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 74px;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.cal-cell.is-blank {
+  border: 0;
+  background: none;
+}
+
+.cal-num {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cal-meta {
+  display: grid;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--ink-soft);
+}
+
+.cal-meta strong {
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.cal-holiday {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-cell.is-today {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+}
+
+/* Status colours (cells and legend dots) */
+.st-present {
+  border-color: rgba(47, 133, 90, 0.35);
+  background: rgba(47, 133, 90, 0.1);
+}
+
+.st-late {
+  border-color: rgba(196, 98, 58, 0.45);
+  background: rgba(196, 98, 58, 0.14);
+}
+
+.st-half_day {
+  border-color: rgba(217, 119, 6, 0.45);
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.st-absent {
+  border-color: rgba(180, 35, 24, 0.35);
+  background: rgba(180, 35, 24, 0.09);
+}
+
+.st-absent .cal-meta {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.st-holiday {
+  border-color: rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.09);
+}
+
+.st-holiday .cal-meta {
+  color: #1d4ed8;
+}
+
+.st-leave {
+  border-color: rgba(124, 58, 237, 0.35);
+  background: rgba(124, 58, 237, 0.09);
+}
+
+.st-leave .cal-meta {
+  color: #6d28d9;
+}
+
+/* Approved leave that hasn't happened yet */
+.st-leave-upcoming {
+  border-style: dashed;
+  border-color: rgba(124, 58, 237, 0.45);
+}
+
+.st-leave-upcoming .cal-meta {
+  color: #6d28d9;
+}
+
+.st-off {
+  background: rgba(29, 21, 18, 0.04);
+}
+
+.st-off .cal-num,
+.st-future .cal-num,
+.st-none .cal-num {
+  color: var(--ink-faint);
+}
+
+.st-not_in {
+  border-style: dashed;
+}
+
+.st-future,
+.st-none {
+  border-style: dashed;
+  background: transparent;
+}
+
+/* Legend */
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cal-dot {
+  width: 12px;
+  height: 12px;
+  border: 1px solid;
+  border-radius: 3px;
+}
+
+/* Compact (dashboard): small square cells */
+.cal.is-compact .cal-grid {
+  gap: 4px;
+}
+
+.cal.is-compact .cal-cell {
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 6px;
+}
+
+.cal.is-compact .cal-num {
+  font-size: 12px;
+}
+
+@media (max-width: 639px) {
+  .cal-grid {
+    gap: 3px;
+  }
+
+  .cal-cell {
+    min-height: 48px;
+    padding: 4px;
+  }
+
+  .cal-meta {
+    display: none;
+  }
+}
+
+/* Legend squares need solid colours (the cell tints are too light at this size) */
+.cal-dot.st-present { border-color: #2f855a; background: #2f855a; }
+.cal-dot.st-late { border-color: var(--terra); background: var(--terra); }
+.cal-dot.st-half_day { border-color: #d97706; background: #fbbf24; }
+.cal-dot.st-absent { border-color: #b42318; background: #e5675c; }
+.cal-dot.st-holiday { border-color: #1d4ed8; background: #60a5fa; }
+.cal-dot.st-leave { border-color: #6d28d9; background: #a78bfa; }
+.cal-dot.st-off { border-color: rgba(29, 21, 18, 0.25); background: rgba(29, 21, 18, 0.08); }

@@ -1,11 +1,5 @@
-const LABELS = {
-  present: "On time",
-  late: "Late",
-  absent: "Absent",
-  not_in: "Not in yet",
-  off: "Off day",
-};
+import { DAY_STATUS_LABELS } from "../config";
 
 export default function StatusPill({ status }) {
-  return <span className={`att-status att-${status}`}>{LABELS[status] || status}</span>;
+  return <span className={`att-status att-${status}`}>{DAY_STATUS_LABELS[status] || status}</span>;
 }

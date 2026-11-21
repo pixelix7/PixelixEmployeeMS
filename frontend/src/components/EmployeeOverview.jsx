@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import api, { getErrorMessage } from "../api/client";
 import { ROLES, ROLE_LABELS } from "../config";
-import { formatClock, formatDay, formatDuration, formatTime, todayLabel } from "../utils/format";
+import { formatClock, formatWorkDays, formatDay, formatDuration, formatTime, todayLabel } from "../utils/format";
 import { liveMinutes, useNow } from "../utils/attendance";
 import { AlarmIcon, CalendarIcon, ClockIcon, LoginIcon, LogoutIcon } from "./Icons";
 import { CheckOutCell, WorkedCell } from "./AttendanceCells";
 import TodayFollowUps from "./TodayFollowUps";
 import TodayWork from "./TodayWork";
+import AnnouncementsPanel from "./AnnouncementsPanel";
+import MyTasksPanel from "./MyTasksPanel";
+import TodayReportCard from "./TodayReportCard";
+import MyAttendanceCalendar from "./MyAttendanceCalendar";
 import StatusPill from "./StatusPill";
 import "./AttendanceTable.css";
 import "./EmployeeOverview.css";
@@ -59,6 +63,10 @@ export default function EmployeeOverview({ user }) {
         </p>
       </header>
 
+      <TodayReportCard />
+      <AnnouncementsPanel />
+      <MyTasksPanel />
+
       {user.role === ROLES.TELECALLER && <TodayFollowUps />}
       {user.role === ROLES.DIGITAL_MARKETING && <TodayWork />}
 
@@ -80,6 +88,9 @@ export default function EmployeeOverview({ user }) {
       </section>
 
       <ClockCard record={today} now={now} policy={policy} onChanged={load} />
+
+      {/* Refreshes when today's record changes (clock in / out) */}
+      <MyAttendanceCalendar refreshKey={today?.updatedAt || "none"} />
 
       <section className="panel">
         <div className="panel-head">
@@ -113,7 +124,7 @@ export default function EmployeeOverview({ user }) {
                       <WorkedCell record={r} now={now} />
                     </td>
                     <td>
-                      <StatusPill status={r.status} />
+                      <StatusPill status={r.dayStatus || r.status} />
                     </td>
                   </tr>
                 ))}
@@ -130,10 +141,13 @@ export default function EmployeeOverview({ user }) {
 const policyText = (policy) => {
   if (!policy) return "";
   const late = formatClock(policy.lateAfter);
-  if (policy.officeStart && policy.graceMinutes) {
-    return `Office starts at ${formatClock(policy.officeStart)}. You have a ${policy.graceMinutes}-minute grace period — clocking in after ${late} marks you late.`;
+  const hours = policy.officeEnd
+    ? `Your office hours are ${formatClock(policy.officeStart)} – ${formatClock(policy.officeEnd)}, ${formatWorkDays(policy.workDays)}. `
+    : `Office starts at ${formatClock(policy.officeStart)}. `;
+  if (policy.graceMinutes) {
+    return `${hours}You have a ${policy.graceMinutes}-minute grace period — clocking in after ${late} marks you late.`;
   }
-  return `Clocking in after ${late} marks you late.`;
+  return `${hours}Clocking in after ${late} marks you late.`;
 };
 
 function ClockCard({ record, now, policy, onChanged }) {

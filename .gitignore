@@ -1,12 +1,21 @@
+# Pixelix EMS — backend (Node/Express) + frontend (React/Vite + Capacitor Android)
+
 # ---------- Secrets (never commit these) ----------
+# backend/.env holds MONGODB_URI and JWT_SECRET
 .env
 .env.*
 !.env.example
+# Only holds the public API URL (VITE_ values end up in the website anyway);
+# committed so Vercel and APK builds point at the right backend
+!frontend/.env.production
 *.pem
 *.key
+*.p12
 *.keystore
 *.jks
 keystore.properties
+google-services.json
+.claude/settings.local.json
 
 # ---------- Dependencies ----------
 node_modules/
@@ -16,15 +25,20 @@ dist/
 dist-ssr/
 build/
 *.local
+*.tsbuildinfo
 
 # ---------- Android / Capacitor (APK builds) ----------
 frontend/android/app/build/
 frontend/android/build/
 frontend/android/.gradle/
+frontend/android/.kotlin/
 frontend/android/local.properties
 frontend/android/app/release/
+frontend/android/app/debug/
+frontend/android/captures/
 *.apk
 *.aab
+*.idsig
 
 # ---------- Logs ----------
 logs/
@@ -34,10 +48,20 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# ---------- Exported reports / uploads (may contain employee data) ----------
+# ---------- Exported reports / uploads / DB dumps (contain employee data) ----------
 *.xlsx
 *.csv
+*.pdf
 !frontend/public/**/*.csv
+dump/
+*.bson
+*.archive
+
+# ---------- Caches ----------
+.cache/
+.vite/
+.eslintcache
+.oxlintcache
 
 # ---------- Editors & OS ----------
 .vscode/*

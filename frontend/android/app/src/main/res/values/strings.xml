@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pixelix EMS</string>
+    <string name="title_activity_main">Pixelix EMS</string>
+    <string name="package_name">com.pixelix.ems</string>
+    <string name="custom_url_scheme">com.pixelix.ems</string>
+</resources>
