@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {NavLink, Outlet} from "react-router-dom";
 import {useAuth} from "../context/useAuth";
+import {useBackHandler} from "../utils/backButton";
 import {APP_NAME, ROLES, ROLE_LABELS} from "../config";
 import {
     LeaveIcon,
@@ -76,6 +77,8 @@ const NAV_ITEMS = [
 export default function Layout() {
     const {user, logout} = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
+    // Android back button closes the mobile menu first
+    useBackHandler(menuOpen, () => setMenuOpen(false));
 
     const items = NAV_ITEMS.filter(
         (item) => !item.roles || item.roles.includes(user.role),

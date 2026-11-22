@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 import { CloseIcon } from "./Icons";
+import { useBackHandler } from "../utils/backButton";
 import "./Modal.css";
 
 // Centered dialog. Closes on Escape or a click outside the panel.
 export default function Modal({ title, subtitle, onClose, size = "lg", children }) {
+  // Android back button closes the dialog instead of leaving the page
+  useBackHandler(true, onClose);
+
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);

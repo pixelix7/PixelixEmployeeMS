@@ -1,0 +1,15 @@
+.exit-text {
+  margin: 0 0 20px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.exit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.exit-actions .button {
+  flex: 1;
+  justify-content: center;
+}
