@@ -254,9 +254,68 @@
     max-width: none;
   }
 
+  /* Phones: 2 employee cards per row, compact */
   .emp-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .emp-cover,
+  .emp-actions {
+    aspect-ratio: 5 / 4;
+  }
+
+  .emp-cover {
+    padding-top: 22px; /* room for the ID / role badges */
+  }
+
+  .emp-initials {
+    width: 56px;
+    height: 56px;
+    font-size: 17px;
+  }
+
+  .emp-badges {
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .emp-badge {
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    line-height: 15px;
+  }
+
+  .emp-actions {
+    gap: 6px;
+    padding-bottom: 10px;
+  }
+
+  .emp-actions button {
+    padding: 7px;
+    border-radius: 9px;
+  }
+
+  .emp-actions button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .emp-info {
+    padding: 12px;
+  }
+
+  .emp-info h3 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .emp-info p {
+    font-size: 11px;
   }
 }
 

@@ -637,3 +637,15 @@
   font-weight: 700;
   letter-spacing: 0.04em;
 }
+
+/* Phones: overview cards 2 per row */
+@media (max-width: 639px) {
+  .ep-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ep-cards > .stat-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}

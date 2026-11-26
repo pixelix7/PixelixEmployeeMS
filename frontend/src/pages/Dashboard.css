@@ -276,13 +276,59 @@
 }
 
 @media (max-width: 639px) {
+  /* Phones: 2 cards per row, compact */
   .stat-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  /* An odd last card takes the full row instead of leaving a gap */
+  .stat-grid > .stat-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .stat-card {
-    padding: 20px;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 14px 12px 14px 16px;
+  }
+
+  .stat-card > div {
+    min-width: 0;
+  }
+
+  /* Icon tucked into the top-right corner */
+  .stat-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+  }
+
+  .stat-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .stat-label {
+    padding-right: 32px;
+    font-size: 12.5px;
+    line-height: 17px;
+  }
+
+  .stat-value {
+    margin-top: 6px;
+    font-size: 20px;
+    line-height: 26px;
+    overflow-wrap: anywhere;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    line-height: 15px;
   }
 
   .person {
@@ -334,7 +380,7 @@
 
 @media (max-width: 639px) {
   .stat-grid.stat-grid-admin {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

@@ -17,6 +17,7 @@ import clientRoutes from "./routes/clientRoutes.js";
 import salaryRoutes from "./routes/salaryRoutes.js";
 import workReportRoutes from "./routes/workReportRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import leadSheetRoutes from "./routes/leadSheetRoutes.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use("/api/clients", clientRoutes);
 app.use("/api/salaries", salaryRoutes);
 app.use("/api/work-reports", workReportRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/lead-sheets", leadSheetRoutes);
 
 // 404 handler
 app.use((req, res) => {
@@ -72,6 +74,11 @@ app.use((err, req, res, next) => {
   // Invalid ObjectId in a URL param -> 400
   if (err.name === "CastError") {
     return res.status(400).json({ message: `Invalid ${err.path}` });
+  }
+
+  // Upload / body over the size limit -> 413
+  if (err.type === "entity.too.large") {
+    return res.status(413).json({ message: "The file is too large (max 5 MB)" });
   }
 
   // Malformed JSON body -> 400

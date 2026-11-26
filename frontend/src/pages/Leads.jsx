@@ -11,7 +11,8 @@ import {
 import Modal from "../components/Modal";
 import LeadForm from "../components/LeadForm";
 import {CallStatusPill, ContactLinks} from "../components/LeadBits";
-import {PlusIcon, SearchIcon} from "../components/Icons";
+import {PlusIcon, SearchIcon, UploadIcon} from "../components/Icons";
+import {AssignSheetForm, LeadSheetsPanel} from "../components/LeadSheets";
 import {formatWhen} from "../utils/format";
 import "./Dashboard.css";
 import "./Employees.css";
@@ -36,7 +37,8 @@ export default function Leads() {
         at: 0,
     });
     const [loadingMore, setLoadingMore] = useState(false);
-    const [modal, setModal] = useState(null); // { type: "add" } | { type: "edit", lead }
+    const [modal, setModal] = useState(null); // { type: "add" } | { type: "edit", lead } | { type: "sheet" }
+    const [sheetsKey, setSheetsKey] = useState(0); // reloads the sheet list after assigning
     const [toast, setToast] = useState("");
 
     const queryKey = `${debounced}|${status}|${source}|${reloadKey}`;
@@ -143,7 +145,18 @@ export default function Leads() {
                         <PlusIcon /> Add Lead
                     </button>
                 )}
+                {isAdmin && (
+                    <button
+                        type="button"
+                        className="button button-primary emp-add"
+                        onClick={() => setModal({type: "sheet"})}
+                    >
+                        <UploadIcon /> Assign Excel Sheet
+                    </button>
+                )}
             </header>
+
+            <LeadSheetsPanel isAdmin={isAdmin} reloadKey={sheetsKey} onToast={setToast} />
 
             <div className="lead-toolbar">
                 <div className="emp-search">
@@ -356,6 +369,24 @@ export default function Leads() {
                         lead={modal.lead}
                         onSaved={handleSaved}
                         onCancel={closeModal}
+                    />
+                </Modal>
+            )}
+
+            {modal?.type === "sheet" && (
+                <Modal
+                    title="Assign Excel Sheet"
+                    subtitle="Send a lead sheet to one telecaller"
+                    size="md"
+                    onClose={closeModal}
+                >
+                    <AssignSheetForm
+                        onCancel={closeModal}
+                        onSaved={(message) => {
+                            setModal(null);
+                            setToast(message);
+                            setSheetsKey((k) => k + 1);
+                        }}
                     />
                 </Modal>
             )}

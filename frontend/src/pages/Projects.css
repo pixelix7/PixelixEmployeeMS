@@ -130,8 +130,59 @@
     padding: 8px 8px;
   }
 
+  /* Phones: 2 project cards per row, compact */
   .proj-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .proj-card {
+    gap: 8px;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .proj-card-top {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .proj-card .proj-pill {
+    padding: 3px 8px;
+    font-size: 10.5px;
+  }
+
+  .proj-card .task-prio {
+    font-size: 11px;
+  }
+
+  .proj-card-name {
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  .proj-card-client {
+    margin-top: -4px;
+    font-size: 12px;
+  }
+
+  .proj-card .proj-progress {
+    gap: 6px;
+  }
+
+  .proj-card .proj-progress strong {
+    min-width: 30px;
+    font-size: 12px;
+  }
+
+  .proj-card-foot {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .proj-card .proj-due {
+    font-size: 11px;
+    white-space: normal;
   }
 
   .att-head > .button {

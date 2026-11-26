@@ -1,0 +1,218 @@
+/* ---------- Assigned lead sheets ---------- */
+.sheet-panel {
+  margin-bottom: 24px;
+}
+
+.sheet-count {
+  margin-left: 8px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--terra);
+  color: var(--cream);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sheet-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sheet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+.sheet-item:first-child {
+  border-top: 0;
+}
+
+.sheet-item.is-new {
+  background: rgba(196, 98, 58, 0.05);
+}
+
+.sheet-ext {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.sheet-ext-xlsx,
+.sheet-ext-xls {
+  background: rgba(21, 128, 61, 0.12);
+  color: #15803d;
+}
+
+.sheet-ext-csv {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+}
+
+.sheet-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.sheet-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.sheet-new {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--terra);
+  color: var(--cream);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sheet-meta {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+  overflow-wrap: anywhere;
+}
+
+.sheet-meta strong {
+  color: var(--ink-soft);
+}
+
+.sheet-note {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.sheet-status {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sheet-status.is-pending { color: #b45309; }
+.sheet-status.is-done { color: #15803d; }
+
+.sheet-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.sheet-download {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.sheet-delete {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink-faint);
+  cursor: pointer;
+}
+
+.sheet-delete:hover {
+  border-color: rgba(180, 35, 24, 0.45);
+  color: #b42318;
+}
+
+.sheet-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #b42318;
+}
+
+.sheet-confirm .button {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* File picker */
+.sheet-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-field label.sheet-drop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 16px;
+  border: 1.5px dashed rgba(196, 98, 58, 0.45);
+  border-radius: 10px;
+  background: rgba(196, 98, 58, 0.04);
+  color: var(--terra);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.sheet-drop.has-file {
+  border-style: solid;
+  background: rgba(21, 128, 61, 0.05);
+  color: #15803d;
+}
+
+.sheet-drop span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sheet-drop strong {
+  font-size: 14px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.sheet-drop small {
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 639px) {
+  .sheet-item {
+    flex-wrap: wrap;
+    padding: 14px 16px;
+  }
+
+  .sheet-actions {
+    width: 100%;
+    padding-left: 58px;
+  }
+
+  .sheet-download {
+    flex: 1;
+    justify-content: center;
+  }
+}
